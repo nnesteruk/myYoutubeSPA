@@ -1,0 +1,57 @@
+:root {
+  --colorHeart: #1677ff;
+}
+
+.main {
+  // display: flex;
+  // flex-direction: column;
+  // align-items: center;
+  h1 {
+    font-size: 36px;
+    margin-bottom: 10px;
+  }
+  &__search-input {
+    width: 650px;
+    button {
+      padding: 0px 40px;
+    }
+  }
+}
+
+.fa-heart {
+  color: var(--colorHeart);
+  font-size: 18px;
+  cursor: pointer;
+}
+.fa-list {
+  color: rgba(0, 0, 0, 0.348);
+  cursor: pointer;
+  &_active {
+    color: black;
+  }
+}
+.fa-grip {
+  color: rgba(0, 0, 0, 0.348);
+  cursor: pointer;
+  &_active {
+    color: black;
+  }
+}
+
+.search {
+  &__second-line {
+    display: flex;
+    margin: 20px 0px;
+    justify-content: space-between;
+  }
+  &__subtitle {
+    span {
+      font-weight: 700;
+    }
+  }
+  &__filter-options {
+    display: flex;
+    font-size: 16px;
+    gap: 12px;
+  }
+}

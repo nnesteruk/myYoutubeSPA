@@ -1,0 +1,16 @@
+@use './normalize.scss';
+@use './Auth/login.scss';
+@use './Auth/registration.scss';
+@use './Pages/wrap.scss';
+@use './Pages/searchPage/searchPage.scss';
+@use './Pages/searchPage/videoSection.scss';
+@use './Pages/searchPage/modal.scss';
+
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh; /* Высота окна браузера */
+  // display: flex;
+  // justify-content: center; /* Горизонтальное центрирование */
+  // align-items: center; /* Вертикальное центрирование */
+}

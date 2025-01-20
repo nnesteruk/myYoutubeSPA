@@ -1,0 +1,276 @@
+@charset "UTF-8";
+*,
+*::after,
+*::before {
+  padding: 0;
+  margin: 0;
+  border: 0;
+  box-sizing: border-box;
+}
+
+ul,
+ol,
+li {
+  list-style: none;
+}
+
+:focus,
+:active {
+  outline: none;
+}
+
+a:focus,
+a:active {
+  outline: none;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+a:hover {
+  color: inherit;
+}
+
+img {
+  vertical-align: top;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+html,
+body {
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  color: var(--var-body-fc);
+  font-family: "Regular";
+  font-weight: 400;
+  font-size: 16px;
+}
+
+.container {
+  max-width: 1060px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 10px;
+}
+
+.login {
+  background-color: #f3f3f3;
+  border: 2px solid black;
+  border-radius: 15px;
+  height: 450px;
+  width: 360px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.login__icon {
+  color: red;
+  font-size: 80px;
+}
+.login__title {
+  font-size: 2.5rem; /* Большой размер шрифта для акцента */
+  font-weight: 500; /* Жирное начертание */
+  color: rgba(36, 35, 35, 0.767);
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+.login__form {
+  width: 70%;
+}
+.login__input {
+  font-size: 16px;
+  padding: 7px;
+}
+.login__buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  font-size: 15px;
+}
+.login__button {
+  width: 100%;
+  font-size: 16px;
+  padding: 18px 0px;
+  font-weight: 500;
+}
+.login__link {
+  cursor: pointer;
+}
+.login__link:hover {
+  color: #1677ff;
+}
+
+.registration {
+  width: 400px;
+  height: 450px;
+  background-color: #f3f3f3;
+  border: 2px solid black;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.registration__title {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+}
+.form__input {
+  margin-bottom: 10px;
+}
+.form__radio {
+  display: flex;
+}
+.form__radio label {
+  margin: 0px;
+}
+.form__buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 10px;
+}
+.form__buttons button {
+  font-size: 15px;
+  padding: 18px 25px;
+}
+.form__link {
+  margin-top: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 15px;
+}
+
+.wrap {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+.wrap__menu {
+  display: flex;
+  padding-left: 40px;
+}
+.wrap__menu li:nth-child(3) {
+  margin: 0px 30px 0px auto;
+}
+.wrap__menu::before {
+  font-family: "FontAwesome";
+  font-size: 55px;
+  content: "\f167"; /* Unicode для иконки YouTube */
+  color: #ff0000; /* Цвет YouTube */
+  margin-right: 8px; /* Отступ, если нужен текст рядом */
+}
+.wrap__content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.logo {
+  font-size: 40px;
+  color: rgb(255, 0, 0);
+  position: absolute;
+  top: 0;
+  left: -1px;
+  z-index: 2;
+}
+
+:root {
+  --colorHeart: #1677ff;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.main h1 {
+  font-size: 36px;
+  margin-bottom: 10px;
+}
+.main__search-input {
+  width: 650px;
+}
+.main__search-input button {
+  padding: 0px 40px;
+}
+
+.fa-heart {
+  color: var(--colorHeart);
+  font-size: 18px;
+}
+
+.search__second-line {
+  display: flex;
+  margin: 20px 0px;
+  justify-content: space-between;
+}
+.search__subtitle span {
+  font-weight: 700;
+}
+.search__filter-options {
+  display: flex;
+  font-size: 16px;
+  gap: 12px;
+}
+
+.videos__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  align-items: baseline;
+}
+.videos__list img {
+  height: 100%;
+  width: 100%;
+}
+.videos__block {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 20%;
+  gap: 5px;
+}
+.videos__title {
+  text-align: justify;
+  font-weight: 700;
+}
+.videos__subtitle {
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.451);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh; /* Высота окна браузера */
+}
