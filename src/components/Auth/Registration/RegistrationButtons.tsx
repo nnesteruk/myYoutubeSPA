@@ -1,7 +1,8 @@
 import { Button, Form } from 'antd';
+import { FC } from 'react';
 import { NavLink } from 'react-router';
 
-export const RegistrationButtons = () => {
+export const RegistrationButtons: FC = () => {
   return (
     <Form.Item className="form__buttons">
       <Button type="primary" htmlType="submit">

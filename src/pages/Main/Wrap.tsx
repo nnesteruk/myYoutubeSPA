@@ -66,7 +66,7 @@ const Wrap: React.FC = () => {
         style={{
           // padding: 24,
           height: '100%',
-          background: colorBgContainer,
+          // background: colorBgContainer,
           borderRadius: borderRadiusLG,
         }}
         className="wrap__content container">

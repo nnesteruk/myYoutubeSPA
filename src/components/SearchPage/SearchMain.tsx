@@ -1,26 +1,22 @@
 import { GetProps, Input, Tooltip } from 'antd';
 import Search from 'antd/es/input/Search';
-import { FC, useEffect, useState } from 'react';
+import { FC, SetStateAction, useEffect, useState } from 'react';
 import { VideosSection } from './VideosSection';
 import { FavoriteModal } from '../Modal/FavoriteModal';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import { openModal } from '../../redux/slices/modalSlice';
 import { useLazyGetVideosQuery } from '../../redux/services/fetchYoutubeApi';
 import { NavLink } from 'react-router';
+import { VideoParams } from '../type';
 
-type SearchProps = GetProps<typeof Input.Search>;
-type SearchInputProps = {
+export type SearchProps = GetProps<typeof Input.Search>;
+export type SearchInputProps = {
   handleSearchSuccess: (state: boolean) => void; // Тип функции пропса
-};
-export type FavoriteRequest = {
-  searchText: string;
-  count: number;
-  order?: string;
 };
 
 export const SearchMain: FC<SearchInputProps> = ({ handleSearchSuccess }) => {
   const { isModalOpen } = useAppSelector((state) => state.modal);
-  const favoriteRequest: FavoriteRequest | null = JSON.parse(
+  const favoriteRequest: VideoParams | null = JSON.parse(
     localStorage.getItem('favoriteRequest') || 'null',
   );
   const dispatch = useAppDispatch();
@@ -31,7 +27,7 @@ export const SearchMain: FC<SearchInputProps> = ({ handleSearchSuccess }) => {
   const [checkFunc, setCheckFunc] = useState(false);
   const [triggetGetVideos, { data, isSuccess }] = useLazyGetVideosQuery();
 
-  const onSearch: SearchProps['onSearch'] = async (value, _e, info) => {
+  const onSearch: SearchProps['onSearch'] = async () => {
     triggetGetVideos({ searchText });
     setTooltipVisible(false);
     setIconHeart('fa-regular fa-heart');
@@ -47,11 +43,12 @@ export const SearchMain: FC<SearchInputProps> = ({ handleSearchSuccess }) => {
   const clickHeart = () => {
     dispatch(openModal());
   };
-  const handleOnChange = (e) => {
+  const handleOnChange = (e: { target: { value: SetStateAction<string> } }) => {
     setSearchText(e.target.value);
   };
+
   useEffect(() => {
-    if (tooltipVisible) {
+    if (tooltipVisible || favoriteRequest) {
       setIconHeart('fa-solid fa-heart'); // Меняем иконку на "заполненное сердце"
 
       // Убираем тултип через 2 секунды
@@ -68,10 +65,15 @@ export const SearchMain: FC<SearchInputProps> = ({ handleSearchSuccess }) => {
 
   useEffect(() => {
     if (searchText) {
-      triggetGetVideos({ searchText });
+      triggetGetVideos({
+        searchText,
+        count: favoriteRequest?.count,
+        order: favoriteRequest?.order,
+      });
+      console.log(favoriteRequest);
       localStorage.removeItem('favoriteRequest');
     }
-  }, [searchText]); // для сохраненного запроса
+  }, [favoriteRequest]); // для сохраненного запроса
 
   return (
     <>

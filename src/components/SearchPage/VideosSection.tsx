@@ -1,13 +1,28 @@
+import { FC } from 'react';
+
 type VideosSectionProps = {
   video: [];
   choice: string;
 };
-export const VideosSection = ({ video, choice }) => {
+
+type VideoRequestParams = {
+  etag: string;
+  snippet: {
+    title: string;
+    channelTitle: string;
+    thumbnails: {
+      [key: string]: {
+        url: string;
+      };
+    };
+  };
+};
+export const VideosSection: FC<VideosSectionProps> = ({ video, choice }) => {
   return (
     <div className="videos">
       <section className={choice}>
         {video &&
-          video.map(({ etag, snippet }: { etag: string; snippet: any }) => (
+          video.map(({ etag, snippet }: VideoRequestParams) => (
             <div
               className={choice == 'videos__list-content' ? 'videos__block2' : 'videos__block'}
               key={etag}>

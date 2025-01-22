@@ -1,24 +1,24 @@
-import React from 'react';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Form, Input } from 'antd';
 import { useForm, Controller } from 'react-hook-form';
 import { LoginButtons } from './LoginButtons';
 import axios from 'axios';
 import { useNavigate } from 'react-router';
+import { FC } from 'react';
+import { apiUrl } from '../../../redux/services/fetchYoutubeApi';
 
 type LoginValues = {
   email: string;
   password: string;
 };
 
-const LoginForm: React.FC = () => {
+const LoginForm: FC = () => {
   const {
     handleSubmit,
     control,
     formState: { errors },
   } = useForm<LoginValues>();
   const navigate = useNavigate();
-  const apiUrl = import.meta.env.VITE_API_URL;
   const onFinish = async (values: LoginValues) => {
     try {
       const response = await axios.post(`${apiUrl}/api/auth/login`, values);

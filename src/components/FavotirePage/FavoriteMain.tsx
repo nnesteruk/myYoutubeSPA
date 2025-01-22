@@ -2,19 +2,20 @@ import { useNavigate } from 'react-router';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import { deleteFavorite } from '../../redux/slices/favoritesSlice';
 import { FavoriteModal } from '../Modal/FavoriteModal';
-import { FavoriteRequest } from '../SearchPage/SearchMain';
 import { openModal } from '../../redux/slices/modalSlice';
+import { ChangeFavorite, VideoParams } from '../type';
+import { FC } from 'react';
 
-export const FavoriteMain = () => {
+export const FavoriteMain: FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { favorite } = useAppSelector((state) => state.favorite);
   const { isModalOpen } = useAppSelector((state) => state.modal);
-  const handleClickItem = ({ searchText, order, count }: FavoriteRequest) => {
+  const handleClickItem = ({ searchText, order, count }: VideoParams) => {
     localStorage.setItem('favoriteRequest', JSON.stringify({ searchText, order, count }));
     navigate('/searchPage');
   };
-  const handleChangeClick = (item) => {
+  const handleChangeClick = (item: ChangeFavorite): void => {
     localStorage.setItem('changeFavorite', JSON.stringify(item));
     dispatch(openModal());
   };

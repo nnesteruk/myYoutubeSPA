@@ -4,6 +4,7 @@ import { FC } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 import { RegistrationButtons } from './RegistrationButtons';
+import { apiUrl } from '../../../redux/services/fetchYoutubeApi';
 
 type FormValues = {
   password: string;
@@ -26,7 +27,6 @@ export const RegistrationForm: FC = () => {
     formState: { errors },
   } = useForm<FormValues>();
 
-  const apiUrl = import.meta.env.VITE_API_URL;
   const onSubmit = async (value: FormValues) => {
     try {
       await axios.post(`${apiUrl}/api/users/register`, value);

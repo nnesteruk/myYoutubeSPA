@@ -1,31 +1,24 @@
 import { Button } from 'antd';
 import { useAppDispatch } from '../../hooks/hooks';
 import { closeModal } from '../../redux/slices/modalSlice';
+import { FC } from 'react';
+import { ChangeFavorite } from '../type';
 
-export const ModalButtons = () => {
-  const changeFav = JSON.parse(localStorage.getItem('changeFavorite') ?? '{}');
+export const ModalButtons: FC = () => {
+  const changeFav: ChangeFavorite | null = JSON.parse(
+    localStorage.getItem('changeFavorite') ?? 'null',
+  );
   const dispatch = useAppDispatch();
-  const onCancel = () => {
+  const onCancel = (): void => {
     dispatch(closeModal());
     changeFav && localStorage.removeItem('changeFavorite');
   };
   return (
     <div className="modal__buttons">
-      {changeFav?.id ? (
-        <>
-          <Button onClick={onCancel}>Не изменять</Button>
-          <Button type="primary" htmlType="submit">
-            Изменить
-          </Button>
-        </>
-      ) : (
-        <>
-          <Button onClick={onCancel}>Не сохранять</Button>
-          <Button type="primary" htmlType="submit">
-            Сохранить
-          </Button>
-        </>
-      )}
+      <Button onClick={onCancel}>{changeFav?.id ? 'Не изменять' : 'Не сохранять'}</Button>
+      <Button type="primary" htmlType="submit">
+        {changeFav?.id ? 'Изменить' : 'Сохранить'}
+      </Button>
     </div>
   );
 };

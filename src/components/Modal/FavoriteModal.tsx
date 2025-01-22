@@ -1,44 +1,30 @@
 import { Form, InputNumber, Modal, Select, Slider, Input } from 'antd';
 import { FC, useEffect, useState } from 'react';
-import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
+import { useAppDispatch } from '../../hooks/hooks';
 import { closeModal } from '../../redux/slices/modalSlice';
 import { addFavorite, changeFavorite } from '../../redux/slices/favoritesSlice';
-import { ModalButtons } from './ModalButtons';
+import { ModalButtons } from '../Modal/ModalButtons';
+import { ChangeFavorite, FavoriteModalProps, ValueOnFinish } from '../type';
 
-type FavoriteModalProps = {
-  open: boolean;
-  text?: string;
-  checkModal?: (status: boolean) => void;
-};
-type ValueOnFinish = {
-  name: string;
-  searchText: string;
-  sort: string;
-};
-type ChangeFavorite = {
-  id: number;
-  searchText: string;
-  sort?: string;
-  name: string;
-  count: number;
-};
 export const FavoriteModal: FC<FavoriteModalProps> = ({ open, text, checkModal }) => {
   const [form] = Form.useForm();
   const dispatch = useAppDispatch();
-  const changeFav: ChangeFavorite = JSON.parse(localStorage.getItem('changeFavorite') ?? '{}');
+  const changeFav: ChangeFavorite | null = JSON.parse(
+    localStorage.getItem('changeFavorite') ?? 'null',
+  );
+  console.log(changeFav?.count);
   const [inputValue, setInputValue] = useState(1);
   const [isSync, setIsSync] = useState(true); //состояние на изменение slider и input number при редактировании
 
-  const onChange = (newValue: number | null) => {
-    console.log(isSync);
+  const onChange = (newValue: number | null): void => {
     if (newValue !== null) {
       setInputValue(newValue);
       setIsSync(false);
     }
   };
+
   const onFinish = (value: ValueOnFinish): void => {
     if (changeFav?.id) {
-      console.log({ ...value, count: inputValue, id: changeFav?.id });
       dispatch(changeFavorite({ ...value, count: inputValue, id: changeFav?.id }));
       dispatch(closeModal());
     } else {
@@ -51,18 +37,19 @@ export const FavoriteModal: FC<FavoriteModalProps> = ({ open, text, checkModal }
   useEffect(() => {
     if (open) {
       form.setFieldValue('searchText', text || changeFav?.searchText);
-      form.setFieldValue('name', changeFav?.name || '');
-      form.setFieldValue('sort', changeFav?.sort || 'Без сортировки');
+      form.setFieldValue('name', changeFav?.name);
+      form.setFieldValue('sort', changeFav?.sort);
+      setInputValue(changeFav?.count);
     } else {
       form.resetFields();
       setInputValue(1);
     }
   }, [text, open, form]);
-  useEffect(() => {
-    if (changeFav?.count !== undefined && isSync) {
-      setInputValue(changeFav.count);
-    }
-  }, [isSync]);
+
+  // useEffect(() => {
+  //   if (changeFav?.count !== undefined) {
+  //   }
+  // }, [changeFav]);
 
   return (
     <Modal open={open} footer={null} closeIcon={false} className="modal" width={360}>
