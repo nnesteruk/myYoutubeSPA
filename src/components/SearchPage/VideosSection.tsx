@@ -1,9 +1,13 @@
+type VideosSectionProps = {
+  video: [];
+  choice: string;
+};
 export const VideosSection = ({ video, choice }) => {
   return (
     <div className="videos">
       <section className={choice}>
         {video &&
-          video.map(({ etag, snippet }) => (
+          video.map(({ etag, snippet }: { etag: string; snippet: any }) => (
             <div
               className={choice == 'videos__list-content' ? 'videos__block2' : 'videos__block'}
               key={etag}>

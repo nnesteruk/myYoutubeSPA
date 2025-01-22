@@ -25,13 +25,13 @@ const favoriteSlice = createSlice({
       localStorage.setItem('favorite', JSON.stringify(state.favorite));
     },
     changeFavorite: (state, action: PayloadAction<InitialState>) => {
-      state.favorite = state.favorite.map((item, _, array) =>
-        item.id === action.payload.id ? { array, ...action.payload } : item,
+      state.favorite = state.favorite.map((item) =>
+        item.id === action.payload.id ? { ...item, ...action.payload } : item,
       );
       localStorage.setItem('favorite', JSON.stringify(state.favorite));
     },
   },
 });
 
-export const { addFavorite, deleteFavorite } = favoriteSlice.actions;
+export const { addFavorite, deleteFavorite, changeFavorite } = favoriteSlice.actions;
 export default favoriteSlice.reducer;

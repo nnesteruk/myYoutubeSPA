@@ -1,8 +1,9 @@
-import { Button, Form, InputNumber, Modal, Select, Slider, Input } from 'antd';
+import { Form, InputNumber, Modal, Select, Slider, Input } from 'antd';
 import { FC, useEffect, useState } from 'react';
-import { useAppDispatch, useAppSelector } from '../hooks/hooks';
-import { closeModal } from '../redux/slices/modalSlice';
-import { addFavorite } from '../redux/slices/favoritesSlice';
+import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
+import { closeModal } from '../../redux/slices/modalSlice';
+import { addFavorite, changeFavorite } from '../../redux/slices/favoritesSlice';
+import { ModalButtons } from './ModalButtons';
 
 type FavoriteModalProps = {
   open: boolean;
@@ -14,53 +15,63 @@ type ValueOnFinish = {
   searchText: string;
   sort: string;
 };
+type ChangeFavorite = {
+  id: number;
+  searchText: string;
+  sort?: string;
+  name: string;
+  count: number;
+};
 export const FavoriteModal: FC<FavoriteModalProps> = ({ open, text, checkModal }) => {
   const [form] = Form.useForm();
   const dispatch = useAppDispatch();
-  const changeFav = JSON.parse(localStorage.getItem('changeFavorite') ?? '');
+  const changeFav: ChangeFavorite = JSON.parse(localStorage.getItem('changeFavorite') ?? '{}');
   const [inputValue, setInputValue] = useState(1);
-  const { favorite } = useAppSelector((state) => state.favorite);
+  const [isSync, setIsSync] = useState(true); //состояние на изменение slider и input number при редактировании
 
   const onChange = (newValue: number | null) => {
-    newValue && setInputValue(newValue);
+    console.log(isSync);
+    if (newValue !== null) {
+      setInputValue(newValue);
+      setIsSync(false);
+    }
   };
   const onFinish = (value: ValueOnFinish): void => {
-    console.log(value);
-    console.log({ ...value, count: inputValue });
-    dispatch(addFavorite({ ...value, count: inputValue, id: Date.now() }));
-    console.log(favorite);
-    dispatch(closeModal());
-    checkModal && checkModal(true);
-  };
-  const onCancel = () => {
-    dispatch(closeModal());
+    if (changeFav?.id) {
+      console.log({ ...value, count: inputValue, id: changeFav?.id });
+      dispatch(changeFavorite({ ...value, count: inputValue, id: changeFav?.id }));
+      dispatch(closeModal());
+    } else {
+      dispatch(addFavorite({ ...value, count: inputValue, id: Date.now() }));
+      dispatch(closeModal());
+      checkModal && checkModal(true);
+    }
   };
 
   useEffect(() => {
     if (open) {
       form.setFieldValue('searchText', text || changeFav?.searchText);
       form.setFieldValue('name', changeFav?.name || '');
-      form.setFieldValue('sort', changeFav?.sort || '');
-      form.setFieldValue('sort', changeFav?.sort || '');
+      form.setFieldValue('sort', changeFav?.sort || 'Без сортировки');
     } else {
       form.resetFields();
       setInputValue(1);
     }
   }, [text, open, form]);
   useEffect(() => {
-    if (changeFav?.count !== undefined) {
+    if (changeFav?.count !== undefined && isSync) {
       setInputValue(changeFav.count);
     }
-  }, [changeFav]);
+  }, [isSync]);
 
   return (
     <Modal open={open} footer={null} closeIcon={false} className="modal" width={360}>
-      <h3>{changeFav ? 'Изменить запрос' : 'Сохранить запрос'}</h3>
+      <h3>{changeFav?.id ? 'Изменить запрос' : 'Сохранить запрос'}</h3>
       <Form form={form} onFinish={onFinish} className="modal__form">
         <div>
           <label>Запрос</label>
           <Form.Item name="searchText" initialValue={text}>
-            <Input placeholder="поиск" disabled={changeFav ? false : true} />
+            <Input placeholder="поиск" disabled={changeFav?.id ? false : true} />
           </Form.Item>
         </div>
         <div>
@@ -107,12 +118,7 @@ export const FavoriteModal: FC<FavoriteModalProps> = ({ open, text, checkModal }
             </div>
           </Form.Item>
         </div>
-        <div className="modal__buttons">
-          <Button onClick={onCancel}>Не сохранять</Button>
-          <Button type="primary" htmlType="submit">
-            Сохранить
-          </Button>
-        </div>
+        <ModalButtons />
       </Form>
     </Modal>
   );

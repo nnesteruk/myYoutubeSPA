@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { SearchInput } from '../../components/SearchPage/SearchInput';
+import { SearchMain } from '../../components/SearchPage/SearchMain';
 
 const SearchPage: React.FC = () => {
   const [searchResult, setSearchResult] = useState(false);
@@ -10,7 +10,7 @@ const SearchPage: React.FC = () => {
   return (
     <div className={!searchResult ? 'main' : 'main-search'}>
       <h1>Поиск видео</h1>
-      <SearchInput handleSearchSuccess={handleSearchSuccess} />
+      <SearchMain handleSearchSuccess={handleSearchSuccess} />
     </div>
   );
 };

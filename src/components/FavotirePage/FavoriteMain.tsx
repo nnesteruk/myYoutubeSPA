@@ -1,8 +1,8 @@
 import { useNavigate } from 'react-router';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import { deleteFavorite } from '../../redux/slices/favoritesSlice';
-import { FavoriteModal } from '../FavoriteModal';
-import { FavoriteRequest } from '../SearchPage/SearchInput';
+import { FavoriteModal } from '../Modal/FavoriteModal';
+import { FavoriteRequest } from '../SearchPage/SearchMain';
 import { openModal } from '../../redux/slices/modalSlice';
 
 export const FavoriteMain = () => {

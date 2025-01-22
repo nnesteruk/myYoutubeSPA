@@ -2,7 +2,7 @@ import { GetProps, Input, Tooltip } from 'antd';
 import Search from 'antd/es/input/Search';
 import { FC, useEffect, useState } from 'react';
 import { VideosSection } from './VideosSection';
-import { FavoriteModal } from '../FavoriteModal';
+import { FavoriteModal } from '../Modal/FavoriteModal';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import { openModal } from '../../redux/slices/modalSlice';
 import { useLazyGetVideosQuery } from '../../redux/services/fetchYoutubeApi';
@@ -18,7 +18,7 @@ export type FavoriteRequest = {
   order?: string;
 };
 
-export const SearchInput: FC<SearchInputProps> = ({ handleSearchSuccess }) => {
+export const SearchMain: FC<SearchInputProps> = ({ handleSearchSuccess }) => {
   const { isModalOpen } = useAppSelector((state) => state.modal);
   const favoriteRequest: FavoriteRequest | null = JSON.parse(
     localStorage.getItem('favoriteRequest') || 'null',
