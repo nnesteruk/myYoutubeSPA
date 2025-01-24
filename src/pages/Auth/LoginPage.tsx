@@ -6,7 +6,7 @@ export const LoginPage = () => {
     <div className="login container">
       <h1 className="login__title">
         <i className="fab fa-youtube login__icon"></i>
-        Вход
+        Входд
       </h1>
       <LoginForm />
     </div>
