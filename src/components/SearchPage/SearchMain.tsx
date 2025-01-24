@@ -118,10 +118,12 @@ export const SearchMain: FC<SearchInputProps> = ({ handleSearchSuccess }) => {
           />
           {isSuccess && (
             <div className="search__second-line">
-              <h2 className="search__subtitle">
-                Видео по запросу «<span>{searchText}</span>»
-              </h2>
-              <h2>{data?.pageInfo.totalResults}</h2>
+              <div className="search__subtitle-block">
+                <h2 className="search__subtitle">
+                  Видео по запросу «<span>{searchText}</span>»
+                </h2>
+                <h2>{data?.pageInfo.totalResults}</h2>
+              </div>
               <div className="search__filter-options">
                 <i
                   className={
