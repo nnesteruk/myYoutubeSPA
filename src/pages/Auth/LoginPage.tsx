@@ -1,5 +1,4 @@
 import LoginForm from '../../components/Auth/Login/LoginForm';
-import '@fortawesome/fontawesome-free/css/all.min.css';
 
 export const LoginPage = () => {
   return (
