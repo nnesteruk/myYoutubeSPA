@@ -25,7 +25,7 @@ export const SearchMain: FC<SearchInputProps> = ({ handleSearchSuccess }) => {
   const [filterChoice, setFilterChoice] = useState('videos__list-content');
   const [iconHeart, setIconHeart] = useState('fa-regular fa-heart');
   const [checkFunc, setCheckFunc] = useState(false);
-  const [triggerGetVideos, { data, isSuccess, error }] = useLazyGetVideosQuery();
+  const [triggerGetVideos, { data, isSuccess }] = useLazyGetVideosQuery();
 
   const onSearch: SearchProps['onSearch'] = async () => {
     triggerGetVideos({ searchText });

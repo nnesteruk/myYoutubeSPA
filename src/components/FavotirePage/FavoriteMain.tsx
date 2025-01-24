@@ -13,7 +13,7 @@ export const FavoriteMain: FC = () => {
   const { isModalOpen } = useAppSelector((state) => state.modal);
   const handleClickItem = ({ searchText, sort, count }: VideoSearchParams) => {
     localStorage.setItem('favoriteRequest', JSON.stringify({ searchText, sort, count }));
-    // navigate('/searchPage');
+    navigate('/searchPage');
   };
   const handleChangeClick = (item: ChangeFavorite): void => {
     localStorage.setItem('changeFavorite', JSON.stringify(item));

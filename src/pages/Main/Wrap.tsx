@@ -12,7 +12,7 @@ const items = ['Поиск', 'Избранное', 'Выйти'].map((name, inde
 const Wrap: React.FC = () => {
   const navigate = useNavigate();
   const {
-    token: { colorBgContainer, borderRadiusLG },
+    token: { borderRadiusLG },
   } = theme.useToken();
 
   const clickYoutube = () => {
@@ -53,8 +53,8 @@ const Wrap: React.FC = () => {
                   break;
                 case '3':
                   {
-                    // navigate('/');
-                    // localStorage.removeItem('token');
+                    navigate('/');
+                    localStorage.removeItem('token');
                   }
                   break;
               }
@@ -66,7 +66,6 @@ const Wrap: React.FC = () => {
         style={{
           // padding: 24,
           height: '100%',
-          // background: colorBgContainer,
           borderRadius: borderRadiusLG,
         }}
         className="wrap__content container">
