@@ -46,15 +46,15 @@ const Wrap: React.FC = () => {
             onClick={(item) => {
               switch (item.key) {
                 case '1':
-                  navigate('searchPage');
+                  navigate('/searchPage');
                   break;
                 case '2':
-                  navigate('favoritePage');
+                  navigate('/favoritePage');
                   break;
                 case '3':
                   {
-                    navigate('/');
-                    localStorage.removeItem('token');
+                    // navigate('/');
+                    // localStorage.removeItem('token');
                   }
                   break;
               }

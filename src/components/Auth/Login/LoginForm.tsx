@@ -5,12 +5,9 @@ import { LoginButtons } from './LoginButtons';
 import axios from 'axios';
 import { useNavigate } from 'react-router';
 import { FC } from 'react';
-import { apiUrl } from '../../../redux/services/fetchYoutubeApi';
+import { LoginValues } from '../../type';
 
-type LoginValues = {
-  email: string;
-  password: string;
-};
+export const apiUrl = import.meta.env.VITE_API_URL;
 
 const LoginForm: FC = () => {
   const {

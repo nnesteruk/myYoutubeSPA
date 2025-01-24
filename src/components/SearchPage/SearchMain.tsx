@@ -7,7 +7,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import { openModal } from '../../redux/slices/modalSlice';
 import { useLazyGetVideosQuery } from '../../redux/services/fetchYoutubeApi';
 import { NavLink } from 'react-router';
-import { VideoParams } from '../type';
+import { VideoSearchParams } from '../type';
 
 export type SearchProps = GetProps<typeof Input.Search>;
 export type SearchInputProps = {
@@ -16,7 +16,7 @@ export type SearchInputProps = {
 
 export const SearchMain: FC<SearchInputProps> = ({ handleSearchSuccess }) => {
   const { isModalOpen } = useAppSelector((state) => state.modal);
-  const favoriteRequest: VideoParams | null = JSON.parse(
+  const favoriteRequest: VideoSearchParams | null = JSON.parse(
     localStorage.getItem('favoriteRequest') || 'null',
   );
   const dispatch = useAppDispatch();
@@ -25,25 +25,25 @@ export const SearchMain: FC<SearchInputProps> = ({ handleSearchSuccess }) => {
   const [filterChoice, setFilterChoice] = useState('videos__list-content');
   const [iconHeart, setIconHeart] = useState('fa-regular fa-heart');
   const [checkFunc, setCheckFunc] = useState(false);
-  const [triggetGetVideos, { data, isSuccess }] = useLazyGetVideosQuery();
+  const [triggerGetVideos, { data, isSuccess, error }] = useLazyGetVideosQuery();
 
   const onSearch: SearchProps['onSearch'] = async () => {
-    triggetGetVideos({ searchText });
+    triggerGetVideos({ searchText });
     setTooltipVisible(false);
     setIconHeart('fa-regular fa-heart');
   };
 
-  const onClickList = () => {
+  const onClickList = (): void => {
     setFilterChoice(() => 'videos__list-content');
   };
-  const onClickGrid = () => {
+  const onClickGrid = (): void => {
     setFilterChoice(() => 'videos__block-content');
   };
 
-  const clickHeart = () => {
+  const clickHeart = (): void => {
     dispatch(openModal());
   };
-  const handleOnChange = (e: { target: { value: SetStateAction<string> } }) => {
+  const handleOnChange = (e: { target: { value: SetStateAction<string> } }): void => {
     setSearchText(e.target.value);
   };
 
@@ -65,16 +65,15 @@ export const SearchMain: FC<SearchInputProps> = ({ handleSearchSuccess }) => {
 
   useEffect(() => {
     if (searchText) {
-      triggetGetVideos({
+      triggerGetVideos({
         searchText,
         count: favoriteRequest?.count,
-        order: favoriteRequest?.order,
+        sort: favoriteRequest?.sort,
       });
-      console.log(favoriteRequest);
+
       localStorage.removeItem('favoriteRequest');
     }
   }, [favoriteRequest]); // для сохраненного запроса
-
   return (
     <>
       <Search
@@ -116,6 +115,7 @@ export const SearchMain: FC<SearchInputProps> = ({ handleSearchSuccess }) => {
           <h2 className="search__subtitle">
             Видео по запросу «<span>{searchText}</span>»
           </h2>
+          <h2>{data?.pageInfo.totalResults}</h2>
           <div className="search__filter-options">
             <i
               className={
@@ -134,8 +134,8 @@ export const SearchMain: FC<SearchInputProps> = ({ handleSearchSuccess }) => {
           </div>
         </div>
       )}
-      <FavoriteModal open={isModalOpen} text={searchText} checkModal={setTooltipVisible} />
       <VideosSection video={data?.items} choice={filterChoice} />
+      <FavoriteModal open={isModalOpen} text={searchText} checkModal={setTooltipVisible} />
     </>
   );
 };

@@ -4,7 +4,7 @@ import { FC } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 import { RegistrationButtons } from './RegistrationButtons';
-import { apiUrl } from '../../../redux/services/fetchYoutubeApi';
+import { apiUrl } from '../Login/LoginForm';
 
 type FormValues = {
   password: string;

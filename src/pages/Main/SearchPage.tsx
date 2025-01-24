@@ -3,7 +3,7 @@ import { SearchMain } from '../../components/SearchPage/SearchMain';
 
 const SearchPage: React.FC = () => {
   const [searchResult, setSearchResult] = useState(false);
-  const handleSearchSuccess = (isSuccess: boolean) => {
+  const handleSearchSuccess = (isSuccess: boolean): void => {
     setSearchResult(() => isSuccess);
   };
 

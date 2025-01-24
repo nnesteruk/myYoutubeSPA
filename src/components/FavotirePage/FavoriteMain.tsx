@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import { deleteFavorite } from '../../redux/slices/favoritesSlice';
 import { FavoriteModal } from '../Modal/FavoriteModal';
 import { openModal } from '../../redux/slices/modalSlice';
-import { ChangeFavorite, VideoParams } from '../type';
+import { ChangeFavorite, VideoSearchParams } from '../type';
 import { FC } from 'react';
 
 export const FavoriteMain: FC = () => {
@@ -11,9 +11,9 @@ export const FavoriteMain: FC = () => {
   const dispatch = useAppDispatch();
   const { favorite } = useAppSelector((state) => state.favorite);
   const { isModalOpen } = useAppSelector((state) => state.modal);
-  const handleClickItem = ({ searchText, order, count }: VideoParams) => {
-    localStorage.setItem('favoriteRequest', JSON.stringify({ searchText, order, count }));
-    navigate('/searchPage');
+  const handleClickItem = ({ searchText, sort, count }: VideoSearchParams) => {
+    localStorage.setItem('favoriteRequest', JSON.stringify({ searchText, sort, count }));
+    // navigate('/searchPage');
   };
   const handleChangeClick = (item: ChangeFavorite): void => {
     localStorage.setItem('changeFavorite', JSON.stringify(item));

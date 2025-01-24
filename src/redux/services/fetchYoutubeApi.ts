@@ -1,20 +1,20 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { VideoParams } from '../../components/type';
+import { GetVideosResponse, VideoSearchParams } from '../../components/type';
 
-export const apiUrl: string = import.meta.env.VITE_YOUTUBE_API_URL;
+export const apiYoutubeUrl: string = import.meta.env.VITE_YOUTUBE_API_URL;
 export const apiKey: string = import.meta.env.VITE_API_KEY;
 
 export const fetchYoutubeApi = createApi({
   reducerPath: 'fetchYoutubeApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: `${apiUrl}`,
+    baseUrl: `${apiYoutubeUrl}`,
   }),
   tagTypes: ['Videos'],
   endpoints: (builder) => ({
-    getVideos: builder.query({
-      query: ({ searchText = '', count = 12, order = 'date' }: VideoParams) => ({
+    getVideos: builder.query<GetVideosResponse, VideoSearchParams>({
+      query: ({ searchText = '', count = 12, sort = 'date' }) => ({
         url: `/search?key=${apiKey}`,
-        params: { part: 'snippet', q: searchText, order, maxResults: count },
+        params: { part: 'snippet', q: searchText, order: sort, maxResults: count },
       }),
       providesTags: (result) => (result ? ['Videos'] : []),
     }),

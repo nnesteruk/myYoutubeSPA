@@ -12,14 +12,11 @@ export const FavoriteModal: FC<FavoriteModalProps> = ({ open, text, checkModal }
   const changeFav: ChangeFavorite | null = JSON.parse(
     localStorage.getItem('changeFavorite') ?? 'null',
   );
-  console.log(changeFav?.count);
   const [inputValue, setInputValue] = useState(1);
-  const [isSync, setIsSync] = useState(true); //состояние на изменение slider и input number при редактировании
 
   const onChange = (newValue: number | null): void => {
     if (newValue !== null) {
       setInputValue(newValue);
-      setIsSync(false);
     }
   };
 
@@ -39,17 +36,12 @@ export const FavoriteModal: FC<FavoriteModalProps> = ({ open, text, checkModal }
       form.setFieldValue('searchText', text || changeFav?.searchText);
       form.setFieldValue('name', changeFav?.name);
       form.setFieldValue('sort', changeFav?.sort);
-      setInputValue(changeFav?.count);
+      setInputValue(changeFav?.count || 0);
     } else {
       form.resetFields();
       setInputValue(1);
     }
   }, [text, open, form]);
-
-  // useEffect(() => {
-  //   if (changeFav?.count !== undefined) {
-  //   }
-  // }, [changeFav]);
 
   return (
     <Modal open={open} footer={null} closeIcon={false} className="modal" width={360}>

@@ -1,3 +1,8 @@
+export type LoginValues = {
+  email: string;
+  password: string;
+};
+
 export type FavoriteModalProps = {
   open: boolean;
   text?: string;
@@ -13,13 +18,43 @@ export type ValueOnFinish = {
 export type ChangeFavorite = {
   id: number;
   searchText: string;
-  sort: string | null;
+  sort?: string;
   name: string;
   count: number;
 };
 
-export type VideoParams = {
+export type VideoSearchParams = {
   searchText: string;
   count?: number;
-  order?: string;
+  sort?: string;
+};
+
+type Snippet = {
+  title: string;
+  channelTitle: string;
+  thumbnails: {
+    default?: { url: string };
+    medium?: { url: string };
+    high?: { url: string };
+  };
+};
+type Video = {
+  etag: string;
+  id: { videoId: string };
+  snippet: Snippet;
+};
+
+type VideoYoutubeProperty = {
+  etag: string;
+  pageInfo: {
+    totalResults: number;
+  };
+  items: Video[];
+};
+
+export type GetVideosResponse = VideoYoutubeProperty;
+
+export type VideosSectionProps = {
+  video?: Video[];
+  choice: string;
 };

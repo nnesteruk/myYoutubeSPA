@@ -16,7 +16,9 @@
     margin-left: 60px;
     li:nth-child(3) {
       margin: 0px 0px 0px auto;
-      padding: 0px;
+    }
+    li span:hover {
+      color: #1677ff;
     }
     // &::before {
     //   font-family: 'FontAwesome';
@@ -33,6 +35,11 @@
     top: 0;
     left: 5px;
     cursor: pointer;
+    &:hover {
+      color: white;
+      background-color: black;
+      transition: all 0.5s;
+    }
   }
   &__content {
     // display: flex;

@@ -4,7 +4,7 @@ type InitialState = {
   id: number;
   name: string;
   searchText: string;
-  sort: string | null;
+  sort?: string;
   count: number;
 };
 const favorites: InitialState[] = JSON.parse(localStorage.getItem('favorite') || '[]');
