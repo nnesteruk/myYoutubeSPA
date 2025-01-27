@@ -4,7 +4,7 @@ export const LoginPage = () => {
   return (
     <div className="login container">
       <h1 className="login__title">
-        <i className="fab fa-youtube login__icon"></i>
+        <i className="fa-brands fa-youtube login__icon"></i>
         Вход
       </h1>
       <LoginForm />
