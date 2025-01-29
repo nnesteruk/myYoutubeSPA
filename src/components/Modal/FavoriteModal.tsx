@@ -2,18 +2,22 @@ import { Form, InputNumber, Modal, Select, Slider, Input } from 'antd';
 import { FC, useEffect, useState } from 'react';
 import { useAppDispatch } from '../../hooks/hooks';
 import { closeModal } from '../../redux/slices/modalSlice';
-import { addFavorite, changeFavorite } from '../../redux/slices/favoritesSlice';
 import { ModalButtons } from '../Modal/ModalButtons';
-import { ChangeFavorite, FavoriteModalProps, ValueOnFinish } from '../type';
+import { FavoriteModalProps, FavoriteProperty, ValueOnFinish } from '../type';
+import {
+  useAddFavoriteRequestMutation,
+  useChangeFavoriteRequestMutation,
+} from '../../redux/services/fetchYoutubeApi';
 
-export const FavoriteModal: FC<FavoriteModalProps> = ({ open, text, checkModal }) => {
+export const FavoriteModal: FC<FavoriteModalProps> = ({ open, text, checkModal, queryId }) => {
   const [form] = Form.useForm();
   const dispatch = useAppDispatch();
-  const changeFav: ChangeFavorite | null = JSON.parse(
+  const changeFav: FavoriteProperty | null = JSON.parse(
     localStorage.getItem('changeFavorite') ?? 'null',
   );
   const [inputValue, setInputValue] = useState(1);
-
+  const [addFavorite, { isError }] = useAddFavoriteRequestMutation();
+  const [changeFavorite, { isSuccess, error }] = useChangeFavoriteRequestMutation();
   const onChange = (newValue: number | null): void => {
     if (newValue !== null) {
       setInputValue(newValue);
@@ -22,21 +26,38 @@ export const FavoriteModal: FC<FavoriteModalProps> = ({ open, text, checkModal }
 
   const onFinish = (value: ValueOnFinish): void => {
     if (changeFav?.id) {
-      dispatch(changeFavorite({ ...value, count: inputValue, id: changeFav?.id }));
+      changeFavorite({
+        title: value.name,
+        text: value.searchText,
+        maxCount: inputValue,
+        sortBy: value.sort,
+        id: changeFav.id,
+      });
+      console.log(isSuccess);
       dispatch(closeModal());
     } else {
-      dispatch(addFavorite({ ...value, count: inputValue, id: Date.now() }));
+      // console.log(value, inputValue);
+      addFavorite({
+        title: value.searchText,
+        sortBy: value.sort,
+        maxCount: inputValue,
+        id: queryId,
+      });
+      console.log(isError);
+      // dispatch(addFavorite({ ...value, count: inputValue, id: Date.now() }));
       dispatch(closeModal());
+
       checkModal && checkModal(true);
     }
   };
+  ('{"id":2,"query":{"title":"124","text":"123","maxCount":"37","sortBy":"title"}}');
 
   useEffect(() => {
     if (open) {
-      form.setFieldValue('searchText', text || changeFav?.searchText);
-      form.setFieldValue('name', changeFav?.name);
-      form.setFieldValue('sort', changeFav?.sort);
-      setInputValue(changeFav?.count || 0);
+      form.setFieldValue('searchText', text || changeFav?.query.title);
+      form.setFieldValue('name', changeFav?.query.text);
+      form.setFieldValue('sort', changeFav?.query.sortBy);
+      setInputValue(changeFav?.query.maxCount || 0);
     } else {
       form.resetFields();
       setInputValue(1);

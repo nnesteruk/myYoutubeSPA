@@ -5,22 +5,24 @@ import { VideosSection } from './VideosSection';
 import { FavoriteModal } from '../Modal/FavoriteModal';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import { openModal } from '../../redux/slices/modalSlice';
-import { useLazyGetVideosQuery } from '../../redux/services/fetchYoutubeApi';
+import { apiKey, apiUrl, useLazyGetVideosQuery } from '../../redux/services/fetchYoutubeApi';
 import { NavLink } from 'react-router';
-import { VideoSearchParams } from '../type';
+import { FavoriteRequestParams } from '../type';
+import axios from 'axios';
 
 export type SearchProps = GetProps<typeof Input.Search>;
 export type SearchInputProps = {
   handleSearchSuccess: (state: boolean) => void; // Тип функции пропса
 };
+const token = localStorage.getItem('token');
 
 export const SearchMain: FC<SearchInputProps> = ({ handleSearchSuccess }) => {
   const { isModalOpen } = useAppSelector((state) => state.modal);
-  const favoriteRequest: VideoSearchParams | null = JSON.parse(
+  const favoriteRequest: FavoriteRequestParams | null = JSON.parse(
     localStorage.getItem('favoriteRequest') || 'null',
   );
   const dispatch = useAppDispatch();
-  const [searchText, setSearchText] = useState(favoriteRequest?.searchText ?? '');
+  const [searchText, setSearchText] = useState(favoriteRequest?.title ?? '');
   const [tooltipVisible, setTooltipVisible] = useState(false);
   const [filterChoice, setFilterChoice] = useState('videos__list-content');
   const [iconHeart, setIconHeart] = useState('fa-regular fa-heart');
@@ -29,8 +31,19 @@ export const SearchMain: FC<SearchInputProps> = ({ handleSearchSuccess }) => {
 
   const onSearch: SearchProps['onSearch'] = async () => {
     triggerGetVideos({ searchText });
+    console.log(isSuccess && data);
     setTooltipVisible(false);
     setIconHeart('fa-regular fa-heart');
+  };
+  const getUserToken = async () => {
+    const response = await axios.post(
+      `${apiUrl}/api/user/addGoogleToken`,
+      { googleToken: apiKey.toString() },
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      },
+    );
+    console.log(response);
   };
 
   const onClickList = (): void => {
@@ -50,7 +63,6 @@ export const SearchMain: FC<SearchInputProps> = ({ handleSearchSuccess }) => {
   useEffect(() => {
     if (tooltipVisible || favoriteRequest) {
       setIconHeart('fa-solid fa-heart'); // Меняем иконку на "заполненное сердце"
-
       // Убираем тултип через 2 секунды
       setTimeout(() => {
         setTooltipVisible(false); // Прячем тултип
@@ -67,13 +79,15 @@ export const SearchMain: FC<SearchInputProps> = ({ handleSearchSuccess }) => {
     if (searchText) {
       triggerGetVideos({
         searchText,
-        count: favoriteRequest?.count,
-        sort: favoriteRequest?.sort,
+        count: favoriteRequest?.maxCount,
+        sort: favoriteRequest?.sortBy,
       });
-
-      localStorage.removeItem('favoriteRequest');
     }
-  }, [favoriteRequest]); // для сохраненного запроса
+    localStorage.removeItem('favoriteRequest');
+  }, []); // для сохраненного запроса
+  useEffect(() => {
+    getUserToken();
+  }, [token]);
   return (
     <>
       {isError ? (
@@ -143,7 +157,12 @@ export const SearchMain: FC<SearchInputProps> = ({ handleSearchSuccess }) => {
             </div>
           )}
           <VideosSection video={data?.items} choice={filterChoice} />
-          <FavoriteModal open={isModalOpen} text={searchText} checkModal={setTooltipVisible} />
+          <FavoriteModal
+            open={isModalOpen}
+            text={searchText}
+            checkModal={setTooltipVisible}
+            queryId={data?.queryId}
+          />
         </>
       )}
     </>

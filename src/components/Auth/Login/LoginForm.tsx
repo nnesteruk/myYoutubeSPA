@@ -6,8 +6,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router';
 import { FC } from 'react';
 import { LoginValues } from '../../type';
-
-export const apiUrl = import.meta.env.VITE_API_URL;
+import { apiUrl } from '../../../redux/services/fetchYoutubeApi';
 
 const LoginForm: FC = () => {
   const {
@@ -18,8 +17,8 @@ const LoginForm: FC = () => {
   const navigate = useNavigate();
   const onFinish = async (values: LoginValues) => {
     try {
-      const response = await axios.post(`${apiUrl}/api/auth/login`, values);
-      localStorage.setItem('token', response.data?.token);
+      const response = await axios.post(`${apiUrl}/api/login/`, values);
+      localStorage.setItem('token', response.data?.accessToken);
       navigate('/searchPage');
     } catch (err) {
       console.log(err);
@@ -33,30 +32,24 @@ const LoginForm: FC = () => {
       initialValues={{ remember: true }}
       onFinish={handleSubmit(onFinish)}>
       <Form.Item
-        validateStatus={errors.email ? 'error' : ''}
+        validateStatus={errors.login ? 'error' : ''}
         help={
-          errors.email && (
+          errors.login && (
             <span style={{ display: 'block', textAlign: 'center', color: 'red' }}>
-              {String(errors.email?.message)}
+              {String(errors.login?.message)}
             </span>
           )
         }>
         <Controller
-          name="email"
+          name="login"
           control={control}
-          rules={{
-            required: { value: true, message: 'Введите email' },
-            pattern: {
-              value: /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/,
-              message: 'Введите корректный email.',
-            },
-          }}
+          rules={{ required: { value: true, message: 'Введите имя пользователя' } }}
           render={({ field }) => (
             <Input
               {...field}
               className="login__input"
               prefix={<UserOutlined />}
-              placeholder="Email"
+              placeholder="Логин"
             />
           )}
         />

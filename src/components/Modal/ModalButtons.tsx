@@ -2,10 +2,10 @@ import { Button } from 'antd';
 import { useAppDispatch } from '../../hooks/hooks';
 import { closeModal } from '../../redux/slices/modalSlice';
 import { FC } from 'react';
-import { ChangeFavorite } from '../type';
+import { FavoriteProperty } from '../type';
 
 export const ModalButtons: FC = () => {
-  const changeFav: ChangeFavorite | null = JSON.parse(
+  const changeFav: FavoriteProperty | null = JSON.parse(
     localStorage.getItem('changeFavorite') ?? 'null',
   );
   const dispatch = useAppDispatch();

@@ -1,17 +1,15 @@
-import { Form, Input, Radio, InputNumber } from 'antd';
+import { Form, Input } from 'antd';
 import axios from 'axios';
 import { FC } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 import { RegistrationButtons } from './RegistrationButtons';
-import { apiUrl } from '../Login/LoginForm';
+import { apiUrl } from '../../../redux/services/fetchYoutubeApi';
 
 type FormValues = {
   password: string;
-  age: number;
   email: string;
-  gender: string;
-  username: string;
+  login: string;
 };
 
 const formItemLayout = {
@@ -29,11 +27,12 @@ export const RegistrationForm: FC = () => {
 
   const onSubmit = async (value: FormValues) => {
     try {
-      await axios.post(`${apiUrl}/api/users/register`, value);
+      await axios.post(`${apiUrl}/api/register/`, value);
       alert('Регистрация прошла успешно');
       navigate('/');
     } catch (err: any) {
       alert(err.response.data.message);
+      console.log(err);
     }
   };
   return (
@@ -41,10 +40,10 @@ export const RegistrationForm: FC = () => {
       <Form.Item
         label="Имя пользователя:"
         className="form__input"
-        validateStatus={errors.username ? 'error' : ''}
-        help={errors.username?.message}>
+        validateStatus={errors.login ? 'error' : ''}
+        help={errors.login?.message}>
         <Controller
-          name="username"
+          name="login"
           control={control}
           rules={{ required: { value: true, message: 'Введите имя пользователя' } }}
           render={({ field }) => (
@@ -84,40 +83,6 @@ export const RegistrationForm: FC = () => {
             pattern: { value: /^(?=.*[A-Z]).{8,}$/, message: 'Пароль не соответствует подсказке' },
           }}
           render={({ field }) => <Input {...field} placeholder="Q123445566" />}
-        />
-      </Form.Item>
-      <Form.Item
-        label="Пол:"
-        className="form__input"
-        validateStatus={errors.gender ? 'error' : ''}
-        help={errors.gender?.message}>
-        <Controller
-          name="gender"
-          control={control}
-          rules={{ required: { value: true, message: 'Выберите пол' } }}
-          render={({ field }) => (
-            <Radio.Group {...field} className="form__radio">
-              <Radio value="male">Мужской</Radio>
-              <Radio value="female">Женский</Radio>
-            </Radio.Group>
-          )}
-        />
-      </Form.Item>
-      <Form.Item
-        label="Возраст"
-        className="form__input"
-        validateStatus={errors.age ? 'error' : ''}
-        help={errors.age?.message}>
-        <Controller
-          name="age"
-          control={control}
-          rules={{
-            required: { value: true, message: 'Введите возраст' },
-            pattern: { value: /^[0-9]+$/, message: 'Возраст должен быть числом' },
-            min: { value: 14, message: 'Возраст должен быть не менее 14 лет' },
-            max: { value: 100, message: 'Возраст должен быть не более 100 лет' },
-          }}
-          render={({ field }) => <InputNumber min={1} max={100} {...field} placeholder="18" />}
         />
       </Form.Item>
       <RegistrationButtons />

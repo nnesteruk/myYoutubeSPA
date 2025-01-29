@@ -1,5 +1,5 @@
 export type LoginValues = {
-  email: string;
+  login: string;
   password: string;
 };
 
@@ -7,6 +7,7 @@ export type FavoriteModalProps = {
   open: boolean;
   text?: string;
   checkModal?: (status: boolean) => void;
+  queryId?: number;
 };
 
 export type ValueOnFinish = {
@@ -15,12 +16,28 @@ export type ValueOnFinish = {
   sort: string;
 };
 
-export type ChangeFavorite = {
+export type Query = {
+  title: string;
+  text: string;
+  maxCount: number;
+  sortBy: string;
   id: number;
-  searchText: string;
-  sort?: string;
-  name: string;
-  count: number;
+};
+
+export type FavoriteProperty = {
+  id: number;
+  query: Query;
+};
+export type FavoriteResponse = {
+  id: number;
+  queryId: number;
+  createdAt: string;
+  updatedAt: string;
+  data: {
+    title: string;
+    maxCount: number;
+    sortBy: string;
+  };
 };
 
 export type VideoSearchParams = {
@@ -39,17 +56,19 @@ type Snippet = {
   };
 };
 type Video = {
-  etag: string;
-  id: { videoId: string };
+  id: string;
   snippet: Snippet;
+  statistics: {
+    viewCount: string;
+  };
 };
 
 type VideoYoutubeProperty = {
-  etag: string;
   pageInfo: {
     totalResults: number;
   };
   items: Video[];
+  queryId: number;
 };
 
 export type GetVideosResponse = VideoYoutubeProperty;
@@ -57,4 +76,11 @@ export type GetVideosResponse = VideoYoutubeProperty;
 export type VideosSectionProps = {
   video?: Video[];
   choice: string;
+};
+
+export type FavoriteRequestParams = {
+  id?: number;
+  title: string;
+  maxCount?: number;
+  sortBy?: string;
 };
