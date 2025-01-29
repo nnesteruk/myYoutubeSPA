@@ -17,7 +17,7 @@ export const FavoriteModal: FC<FavoriteModalProps> = ({ open, text, checkModal, 
   );
   const [inputValue, setInputValue] = useState(1);
   const [addFavorite, { isError }] = useAddFavoriteRequestMutation();
-  const [changeFavorite, { isSuccess, error }] = useChangeFavoriteRequestMutation();
+  const [changeFavorite, { isSuccess }] = useChangeFavoriteRequestMutation();
   const onChange = (newValue: number | null): void => {
     if (newValue !== null) {
       setInputValue(newValue);
@@ -36,7 +36,6 @@ export const FavoriteModal: FC<FavoriteModalProps> = ({ open, text, checkModal, 
       console.log(isSuccess);
       dispatch(closeModal());
     } else {
-      // console.log(value, inputValue);
       addFavorite({
         title: value.searchText,
         sortBy: value.sort,
@@ -44,7 +43,6 @@ export const FavoriteModal: FC<FavoriteModalProps> = ({ open, text, checkModal, 
         id: queryId,
       });
       console.log(isError);
-      // dispatch(addFavorite({ ...value, count: inputValue, id: Date.now() }));
       dispatch(closeModal());
 
       checkModal && checkModal(true);
