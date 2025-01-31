@@ -1,5 +1,5 @@
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
-import { Form, Input } from 'antd';
+import { Form, Input, message } from 'antd';
 import { useForm, Controller } from 'react-hook-form';
 import { LoginButtons } from './LoginButtons';
 import axios from 'axios';
@@ -59,7 +59,7 @@ const LoginForm: FC = () => {
         help={
           errors.password && (
             <span style={{ display: 'block', textAlign: 'center', color: 'red' }}>
-              {String(errors.password?.message)}
+              {errors.password.message}
             </span>
           )
         }>
@@ -68,7 +68,7 @@ const LoginForm: FC = () => {
           control={control}
           rules={{
             required: { value: true, message: 'Введите пароль' },
-            pattern: /^(?=.*[A-Z]).{8,}$/,
+            pattern: { value: /^(?=.*[A-Z]).{8,}$/, message: 'Некорректный пароль' },
           }}
           render={({ field }) => (
             <Input.Password
