@@ -42,7 +42,6 @@ const favoriteSlice = createSlice({
       })
       .addCase(fetchUpdateFavorite.fulfilled, (state, action) => {
         state.isLoading = false;
-        console.log(action.payload);
         state.favorites = state.favorites.map((item) =>
           item.id === action.payload.id ? { ...item, query: action.payload.data } : item,
         );
