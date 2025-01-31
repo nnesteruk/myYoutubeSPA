@@ -19,7 +19,8 @@ const LoginForm: FC = () => {
       const response = await axios.post(`${apiUrl}/api/login/`, values);
       localStorage.setItem('token', response.data?.accessToken);
       navigate('/searchPage');
-    } catch (err) {
+    } catch (err: any) {
+      alert(err.response.data.message);
       console.log(err);
     }
   };
