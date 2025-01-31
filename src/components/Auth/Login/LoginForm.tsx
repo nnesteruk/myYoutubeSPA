@@ -6,8 +6,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router';
 import { FC } from 'react';
 import { LoginValues } from '../../type';
-import { apiUrl } from '../../../redux/services/fetchYoutubeApi';
-
+import { apiUrl } from '../../../redux/actions/favoriteThunkActions';
 const LoginForm: FC = () => {
   const {
     handleSubmit,

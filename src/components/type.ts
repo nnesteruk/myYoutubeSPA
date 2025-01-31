@@ -18,10 +18,10 @@ export type ValueOnFinish = {
 
 export type Query = {
   title: string;
-  text: string;
-  maxCount: number;
-  sortBy: string;
-  id: number;
+  text?: string;
+  maxCount?: number;
+  sortBy?: string;
+  id?: number;
 };
 
 export type FavoriteProperty = {
@@ -41,9 +41,9 @@ export type FavoriteResponse = {
 };
 
 export type VideoSearchParams = {
-  searchText: string;
-  count?: number;
-  sort?: string;
+  query: string;
+  countResult?: number;
+  sortBy?: string;
 };
 
 type Snippet = {
@@ -63,7 +63,7 @@ type Video = {
   };
 };
 
-type VideoYoutubeProperty = {
+export type VideoYoutubeProperty = {
   pageInfo: {
     totalResults: number;
   };
@@ -81,6 +81,34 @@ export type VideosSectionProps = {
 export type FavoriteRequestParams = {
   id?: number;
   title: string;
+  text?: string;
   maxCount?: number;
   sortBy?: string;
 };
+export type FavoriteUpdateResponse = {
+  data: FavoriteRequestParams;
+  id?: number;
+};
+
+export type FavoriteDeleteResponse = {
+  data: {
+    message: string;
+    countDeleted: number;
+  };
+  id: number;
+};
+
+export type FavoriteSliceInitialState = {
+  favorites: FavoriteProperty[];
+  isLoading: boolean;
+  error: string;
+};
+
+export type VideosSliceInitialState = {
+  videos: VideoYoutubeProperty | null;
+  isLoading: boolean;
+  isSuccess: boolean;
+  error: string;
+};
+
+export type ApiModalProperty = { open: boolean; setOpen: (open: boolean) => void };

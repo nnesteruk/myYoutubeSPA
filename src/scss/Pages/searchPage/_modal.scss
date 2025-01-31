@@ -42,3 +42,27 @@
     }
   }
 }
+
+.api-modal {
+  text-align: center;
+  font-weight: 500;
+  h1 {
+    font-size: 18px;
+  }
+  &__block {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    margin: 10px 0px;
+    input {
+      margin-left: 10px;
+      width: 100%;
+    }
+  }
+  a {
+    color: #1677ff;
+    &:hover {
+      color: rgba(89, 154, 246, 0.563);
+    }
+  }
+}

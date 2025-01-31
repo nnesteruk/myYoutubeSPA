@@ -4,10 +4,7 @@ import { useAppDispatch } from '../../hooks/hooks';
 import { closeModal } from '../../redux/slices/modalSlice';
 import { ModalButtons } from '../Modal/ModalButtons';
 import { FavoriteModalProps, FavoriteProperty, ValueOnFinish } from '../type';
-import {
-  useAddFavoriteRequestMutation,
-  useChangeFavoriteRequestMutation,
-} from '../../redux/services/fetchYoutubeApi';
+import { fetchAddFavorite, fetchUpdateFavorite } from '../../redux/actions/favoriteThunkActions';
 
 export const FavoriteModal: FC<FavoriteModalProps> = ({ open, text, checkModal, queryId }) => {
   const [form] = Form.useForm();
@@ -16,8 +13,6 @@ export const FavoriteModal: FC<FavoriteModalProps> = ({ open, text, checkModal, 
     localStorage.getItem('changeFavorite') ?? 'null',
   );
   const [inputValue, setInputValue] = useState(1);
-  const [addFavorite, { isError }] = useAddFavoriteRequestMutation();
-  const [changeFavorite, { isSuccess }] = useChangeFavoriteRequestMutation();
   const onChange = (newValue: number | null): void => {
     if (newValue !== null) {
       setInputValue(newValue);
@@ -26,29 +21,30 @@ export const FavoriteModal: FC<FavoriteModalProps> = ({ open, text, checkModal, 
 
   const onFinish = (value: ValueOnFinish): void => {
     if (changeFav?.id) {
-      changeFavorite({
-        title: value.name,
-        text: value.searchText,
-        maxCount: inputValue,
-        sortBy: value.sort,
-        id: changeFav.id,
-      });
-      console.log(isSuccess);
+      dispatch(
+        fetchUpdateFavorite({
+          text: value.name,
+          title: value.searchText,
+          sortBy: value.sort,
+          maxCount: inputValue,
+          id: changeFav?.id,
+        }),
+      );
       dispatch(closeModal());
     } else {
-      addFavorite({
-        title: value.searchText,
-        sortBy: value.sort,
-        maxCount: inputValue,
-        id: queryId,
-      });
-      console.log(isError);
+      dispatch(
+        fetchAddFavorite({
+          text: value.name,
+          title: value.searchText,
+          sortBy: value.sort,
+          maxCount: inputValue,
+          id: queryId,
+        }),
+      );
       dispatch(closeModal());
-
       checkModal && checkModal(true);
     }
   };
-  ('{"id":2,"query":{"title":"124","text":"123","maxCount":"37","sortBy":"title"}}');
 
   useEffect(() => {
     if (open) {

@@ -1,14 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit';
 import modalReducer from './slices/modalSlice';
-import { fetchYoutubeApi } from './services/fetchYoutubeApi';
+import favoriteReducer from './slices/favoriteSlice';
+import videosReducer from './slices/videosSlice';
 
 export const store = configureStore({
   reducer: {
     modal: modalReducer,
-    [fetchYoutubeApi.reducerPath]: fetchYoutubeApi.reducer,
+    favorite: favoriteReducer,
+    videos: videosReducer,
   },
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(fetchYoutubeApi.middleware),
-  devTools: process.env.NODE_ENV !== 'production',
 });
 
 export type RootState = ReturnType<typeof store.getState>;

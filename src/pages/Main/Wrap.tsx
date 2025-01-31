@@ -54,7 +54,7 @@ const Wrap: React.FC = () => {
                 case '3':
                   {
                     navigate('/');
-                    localStorage.removeItem('token');
+                    localStorage.clear();
                   }
                   break;
               }

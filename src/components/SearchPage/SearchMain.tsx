@@ -5,16 +5,14 @@ import { VideosSection } from './VideosSection';
 import { FavoriteModal } from '../Modal/FavoriteModal';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import { openModal } from '../../redux/slices/modalSlice';
-import { apiKey, apiUrl, useLazyGetVideosQuery } from '../../redux/services/fetchYoutubeApi';
 import { NavLink } from 'react-router';
 import { FavoriteRequestParams } from '../type';
-import axios from 'axios';
+import { fetchGetVideos } from '../../redux/actions/videosThunkAction';
 
 export type SearchProps = GetProps<typeof Input.Search>;
 export type SearchInputProps = {
   handleSearchSuccess: (state: boolean) => void; // Тип функции пропса
 };
-const token = localStorage.getItem('token');
 
 export const SearchMain: FC<SearchInputProps> = ({ handleSearchSuccess }) => {
   const { isModalOpen } = useAppSelector((state) => state.modal);
@@ -27,23 +25,12 @@ export const SearchMain: FC<SearchInputProps> = ({ handleSearchSuccess }) => {
   const [filterChoice, setFilterChoice] = useState('videos__list-content');
   const [iconHeart, setIconHeart] = useState('fa-regular fa-heart');
   const [checkFunc, setCheckFunc] = useState(false);
-  const [triggerGetVideos, { data, isSuccess, isError }] = useLazyGetVideosQuery();
+  const { videos, isLoading, error, isSuccess } = useAppSelector((state) => state.videos);
 
   const onSearch: SearchProps['onSearch'] = async () => {
-    triggerGetVideos({ searchText });
-    console.log(isSuccess && data);
+    dispatch(fetchGetVideos({ query: searchText }));
     setTooltipVisible(false);
     setIconHeart('fa-regular fa-heart');
-  };
-  const getUserToken = async () => {
-    const response = await axios.post(
-      `${apiUrl}/api/user/addGoogleToken`,
-      { googleToken: apiKey.toString() },
-      {
-        headers: { Authorization: `Bearer ${token}` },
-      },
-    );
-    console.log(response);
   };
 
   const onClickList = (): void => {
@@ -73,24 +60,24 @@ export const SearchMain: FC<SearchInputProps> = ({ handleSearchSuccess }) => {
 
   useEffect(() => {
     isSuccess && handleSearchSuccess(isSuccess);
-  }, [data, isSuccess, handleSearchSuccess]);
+  }, [isSuccess, handleSearchSuccess]);
 
   useEffect(() => {
     if (searchText) {
-      triggerGetVideos({
-        searchText,
-        count: favoriteRequest?.maxCount,
-        sort: favoriteRequest?.sortBy,
-      });
+      dispatch(
+        fetchGetVideos({
+          query: searchText,
+          countResult: favoriteRequest?.maxCount,
+          sortBy: favoriteRequest?.sortBy,
+        }),
+      );
     }
     localStorage.removeItem('favoriteRequest');
   }, []); // для сохраненного запроса
-  useEffect(() => {
-    getUserToken();
-  }, [token]);
+
   return (
     <>
-      {isError ? (
+      {error ? (
         <h1>{'Что-то пошло не так :('}</h1>
       ) : (
         <>
@@ -126,7 +113,7 @@ export const SearchMain: FC<SearchInputProps> = ({ handleSearchSuccess }) => {
               )
             }
             className="main__search-input"
-            style={{ width: isSuccess ? '100%' : '650px' }}
+            style={{ width: isSuccess && isLoading === false ? '100%' : '650px' }}
             onSearch={onSearch}
             onChange={handleOnChange}
           />
@@ -136,7 +123,7 @@ export const SearchMain: FC<SearchInputProps> = ({ handleSearchSuccess }) => {
                 <h2 className="search__subtitle">
                   Видео по запросу «<span>{searchText}</span>»
                 </h2>
-                <h2>{data?.pageInfo.totalResults}</h2>
+                <h2>{videos?.pageInfo.totalResults}</h2>
               </div>
               <div className="search__filter-options">
                 <i
@@ -156,12 +143,12 @@ export const SearchMain: FC<SearchInputProps> = ({ handleSearchSuccess }) => {
               </div>
             </div>
           )}
-          <VideosSection video={data?.items} choice={filterChoice} />
+          <VideosSection video={videos?.items} choice={filterChoice} />
           <FavoriteModal
             open={isModalOpen}
             text={searchText}
             checkModal={setTooltipVisible}
-            queryId={data?.queryId}
+            queryId={videos?.queryId}
           />
         </>
       )}
