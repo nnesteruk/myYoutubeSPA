@@ -8,6 +8,7 @@ import { openModal } from '../../redux/slices/modalSlice';
 import { NavLink } from 'react-router';
 import { FavoriteRequestParams } from '../type';
 import { fetchGetVideos } from '../../redux/actions/videosThunkAction';
+import { SearchIsDone } from './SearchIsDone';
 
 export type SearchProps = GetProps<typeof Input.Search>;
 export type SearchInputProps = {
@@ -22,7 +23,6 @@ export const SearchMain: FC<SearchInputProps> = ({ handleSearchSuccess }) => {
   const dispatch = useAppDispatch();
   const [searchText, setSearchText] = useState(favoriteRequest?.title ?? '');
   const [tooltipVisible, setTooltipVisible] = useState(false);
-  const [filterChoice, setFilterChoice] = useState('videos__list-content');
   const [iconHeart, setIconHeart] = useState('fa-regular fa-heart');
   const [checkFunc, setCheckFunc] = useState(false);
   const { videos, isLoading, error, isSuccess } = useAppSelector((state) => state.videos);
@@ -31,13 +31,6 @@ export const SearchMain: FC<SearchInputProps> = ({ handleSearchSuccess }) => {
     dispatch(fetchGetVideos({ query: searchText }));
     setTooltipVisible(false);
     setIconHeart('fa-regular fa-heart');
-  };
-
-  const onClickList = (): void => {
-    setFilterChoice(() => 'videos__list-content');
-  };
-  const onClickGrid = (): void => {
-    setFilterChoice(() => 'videos__block-content');
   };
 
   const clickHeart = (): void => {
@@ -87,7 +80,7 @@ export const SearchMain: FC<SearchInputProps> = ({ handleSearchSuccess }) => {
             size="large"
             defaultValue={searchText}
             suffix={
-              isSuccess && (
+              videos && (
                 <Tooltip
                   title={() => (
                     <div style={{ backgroundColor: 'white', color: 'black' }}>
@@ -113,37 +106,11 @@ export const SearchMain: FC<SearchInputProps> = ({ handleSearchSuccess }) => {
               )
             }
             className="main__search-input"
-            style={{ width: isSuccess && isLoading === false ? '100%' : '650px' }}
+            style={{ width: videos ? '100%' : '650px' }}
             onSearch={onSearch}
             onChange={handleOnChange}
           />
-          {isSuccess && (
-            <div className="search__second-line">
-              <div className="search__subtitle-block">
-                <h2 className="search__subtitle">
-                  Видео по запросу «<span>{searchText}</span>»
-                </h2>
-                <h2>{videos?.pageInfo.totalResults}</h2>
-              </div>
-              <div className="search__filter-options">
-                <i
-                  className={
-                    filterChoice === 'videos__list-content'
-                      ? 'fa-solid fa-list fa-list_active'
-                      : 'fa-solid fa-list'
-                  }
-                  onClick={onClickList}></i>
-                <i
-                  className={
-                    filterChoice === 'videos__block-content'
-                      ? 'fa-solid fa-grip fa-grip_active'
-                      : 'fa-solid fa-grip'
-                  }
-                  onClick={onClickGrid}></i>
-              </div>
-            </div>
-          )}
-          <VideosSection video={videos?.items} choice={filterChoice} />
+          {isSuccess && <SearchIsDone searchText={searchText} videos={videos} />}
           <FavoriteModal
             open={isModalOpen}
             text={searchText}

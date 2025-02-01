@@ -307,6 +307,16 @@ body {
   font-weight: 500;
   color: rgba(0, 0, 0, 0.451);
 }
+.videos__img {
+  border-radius: 20px;
+  transition: all 0.5s;
+}
+.videos__img:hover {
+  border-radius: 20px; /* Увеличим радиус */
+  padding: 10px 13px;
+  background: rgba(0, 0, 0, 0); /* Сделаем фон менее прозрачным */
+  transform: scale(1.1, 1.1); /* Увеличим блок */
+}
 
 .videos__list-content {
   display: flex;
