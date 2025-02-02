@@ -13,7 +13,7 @@ export const VideosSection: FC<VideosSectionProps> = ({ video, choice }) => {
               <img
                 src={snippet?.thumbnails?.medium?.url || ''}
                 alt={snippet.title || 'Thumbnail'}
-                className="videos__img"
+                className={choice == 'videos__list-content' ? 'videos__img2' : 'videos__img'}
               />
               <div className={choice == 'videos__list-content' ? 'videos__info-text' : ''}>
                 <h3 className="videos__title">

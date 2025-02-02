@@ -1,7 +1,6 @@
 import { GetProps, Input, Tooltip } from 'antd';
 import Search from 'antd/es/input/Search';
 import { FC, SetStateAction, useEffect, useState } from 'react';
-import { VideosSection } from './VideosSection';
 import { FavoriteModal } from '../Modal/FavoriteModal';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import { openModal } from '../../redux/slices/modalSlice';
@@ -25,7 +24,7 @@ export const SearchMain: FC<SearchInputProps> = ({ handleSearchSuccess }) => {
   const [tooltipVisible, setTooltipVisible] = useState(false);
   const [iconHeart, setIconHeart] = useState('fa-regular fa-heart');
   const [checkFunc, setCheckFunc] = useState(false);
-  const { videos, isLoading, error, isSuccess } = useAppSelector((state) => state.videos);
+  const { videos, error, isSuccess } = useAppSelector((state) => state.videos);
 
   const onSearch: SearchProps['onSearch'] = async () => {
     dispatch(fetchGetVideos({ query: searchText }));

@@ -315,7 +315,7 @@ body {
   border-radius: 20px; /* Увеличим радиус */
   padding: 10px 13px;
   background: rgba(0, 0, 0, 0); /* Сделаем фон менее прозрачным */
-  transform: scale(1.1, 1.1); /* Увеличим блок */
+  transform: scale(1.2, 1.2); /* Увеличим блок */
 }
 
 .videos__list-content {
@@ -332,6 +332,16 @@ body {
   flex-direction: column;
   gap: 10px;
   font-size: 16px;
+}
+.videos__img2 {
+  border-radius: 20px;
+  transition: all 0.5s;
+}
+.videos__img2:hover {
+  border-radius: 20px; /* Увеличим радиус */
+  padding: 10px 13px;
+  background: rgba(0, 0, 0, 0); /* Сделаем фон менее прозрачным */
+  transform: scale(1.1, 1.1); /* Увеличим блок */
 }
 
 .modal h3 {

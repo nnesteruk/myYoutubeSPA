@@ -36,8 +36,11 @@ export const FavoriteMain: FC = () => {
           <h1 style={{ textAlign: 'center' }}>Сохраненные запросы загружаются...</h1>
         ) : (
           favorites.map((item) => (
-            <div className="favorites__item" key={item?.id}>
-              <li onClick={() => handleClickItem(item?.query)}>{item?.query.text}</li>
+            <div
+              className="favorites__item"
+              key={item?.id}
+              onClick={() => handleClickItem(item?.query)}>
+              <li>{item?.query.text}</li>
               <div className="favorites__buttons">
                 <button
                   className="favorites__buttons--change"

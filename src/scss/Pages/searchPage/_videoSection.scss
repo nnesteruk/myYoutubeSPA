@@ -1,3 +1,4 @@
+//Блочный
 .videos {
   &__block-content {
     display: flex;
@@ -32,11 +33,12 @@
       border-radius: 20px; /* Увеличим радиус */
       padding: 10px 13px;
       background: rgba(0, 0, 0, 0); /* Сделаем фон менее прозрачным */
-      transform: scale(1.1, 1.1); /* Увеличим блок */
+      transform: scale(1.2, 1.2); /* Увеличим блок */
     }
   }
 }
 
+//Список
 .videos {
   &__list-content {
     display: flex;
@@ -52,5 +54,16 @@
     flex-direction: column;
     gap: 10px;
     font-size: 16px;
+  }
+  &__img2 {
+    border-radius: 20px;
+    transition: all 0.5s;
+    &:hover {
+      // border: 1px solid #1677ff;
+      border-radius: 20px; /* Увеличим радиус */
+      padding: 10px 13px;
+      background: rgba(0, 0, 0, 0); /* Сделаем фон менее прозрачным */
+      transform: scale(1.1, 1.1); /* Увеличим блок */
+    }
   }
 }
