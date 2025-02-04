@@ -1,14 +1,8 @@
-import { Route, Routes } from 'react-router';
-import { LoginPage } from './pages/Auth/LoginPage';
-import { RegistrationPage } from './pages/Auth/RegistrationPage';
-import { PrivateRoute } from './routes/PrivateRoute/PrivateRoute';
-import Wrap from './pages/Main/Wrap';
-import SearchPage from './pages/Main/SearchPage';
-import { FavoritePage } from './pages/Main/FavoritePage';
+import { BrowserRouter, Route, Routes } from 'react-router';
 
-export function App() {
+export const AppRouter = () => {
   return (
-    <>
+    <BrowserRouter basename="/youtubeSpa/">
       <Routes>
         <Route path="/" element={<LoginPage />} />
         <Route path="/registration" element={<RegistrationPage />} />
@@ -19,6 +13,6 @@ export function App() {
           </Route>
         </Route>
       </Routes>
-    </>
+    </BrowserRouter>
   );
-}
+};

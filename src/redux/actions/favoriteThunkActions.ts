@@ -8,14 +8,14 @@ import {
 } from '../../components/type';
 import { createAppAsyncThunk } from '../../hooks/hooks';
 
-export const apiUrl = import.meta.env.VITE_API_URL;
+export const apiUrl = import.meta.env.VITE_API_URL; //папка
 
 export const instance = axios.create({
   baseURL: `${apiUrl}`,
   headers: {
     Authorization: `Bearer ${localStorage.getItem('token')}`,
   },
-});
+}); //папка
 
 export const favoriteApi = {
   getFavorites() {

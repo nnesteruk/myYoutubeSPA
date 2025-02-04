@@ -49,4 +49,4 @@ const favoriteSlice = createSlice({
       });
   },
 });
-export default favoriteSlice.reducer;
+export default favoriteSlice.reducer; // без default
