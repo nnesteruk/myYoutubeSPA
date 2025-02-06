@@ -3,20 +3,13 @@ export type LoginValues = {
   password: string;
 };
 
-export type FavoriteModalProps = {
-  open: boolean;
-  text?: string;
-  checkModal?: (status: boolean) => void;
-  queryId?: number;
-};
-
 export type ValueOnFinish = {
   name: string;
   searchText: string;
   sort: string;
 };
 
-export type Query = {
+export type QueryBase = {
   title: string;
   text?: string;
   maxCount?: number;
@@ -24,10 +17,18 @@ export type Query = {
   id?: number;
 };
 
+export type FavoriteModalProps = {
+  open: boolean;
+  text?: string;
+  checkModal?: (status: boolean) => void;
+  queryId?: number;
+};
+
 export type FavoriteProperty = {
   id: number;
-  query: Query;
+  query: QueryBase;
 };
+
 export type FavoriteResponse = {
   id: number;
   queryId: number;
@@ -78,13 +79,8 @@ export type VideosSectionProps = {
   choice: string;
 };
 
-export type FavoriteRequestParams = {
-  id?: number;
-  title: string;
-  text?: string;
-  maxCount?: number;
-  sortBy?: string;
-};
+export type FavoriteRequestParams = QueryBase;
+
 export type FavoriteUpdateResponse = {
   data: FavoriteRequestParams;
   id?: number;
@@ -111,4 +107,7 @@ export type VideosSliceInitialState = {
   error: string;
 };
 
-export type ApiModalProperty = { open: boolean; setOpen: (open: boolean) => void };
+export type ApiModalProperty = {
+  open: boolean;
+  setOpen: (open: boolean) => void;
+};

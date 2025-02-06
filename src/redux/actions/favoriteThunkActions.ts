@@ -6,7 +6,7 @@ import {
   FavoriteResponse,
   FavoriteUpdateResponse,
 } from '../../components/type';
-import { createAppAsyncThunk } from '../../hooks/hooks';
+import { createAppAsyncThunk } from '../../shared/store';
 
 export const apiUrl = import.meta.env.VITE_API_URL; //папка
 
@@ -22,32 +22,33 @@ export const favoriteApi = {
     return instance.get<FavoriteProperty[]>('/api/query/getFavourites');
   },
   addFavorite({ id, title, text, sortBy, maxCount }: FavoriteRequestParams) {
-    return instance.post<FavoriteRequestParams, AxiosResponse<FavoriteResponse>>(
-      `/api/query/saveQuery/${id}`,
-      {
-        title,
-        text,
-        sortBy,
-        maxCount,
-      },
-    );
+    return instance.post<
+      FavoriteRequestParams,
+      AxiosResponse<FavoriteResponse>
+    >(`/api/query/saveQuery/${id}`, {
+      title,
+      text,
+      sortBy,
+      maxCount,
+    });
   },
   deleteFavorite(id: number) {
-    return instance.delete<number, AxiosResponse<{ message: string; countDeleted: number }>>(
-      `/api/query/deleteSavedQuery/${id}`,
-    );
+    return instance.delete<
+      number,
+      AxiosResponse<{ message: string; countDeleted: number }>
+    >(`/api/query/deleteSavedQuery/${id}`);
   },
   updateFavorite({ title, maxCount, sortBy, id, text }: FavoriteRequestParams) {
     console.log({ title, maxCount, sortBy, id, text });
-    return instance.patch<FavoriteRequestParams, AxiosResponse<FavoriteRequestParams>>(
-      `/api/query/editSavedQuery/${id}`,
-      {
-        title,
-        maxCount,
-        sortBy,
-        text,
-      },
-    );
+    return instance.patch<
+      FavoriteRequestParams,
+      AxiosResponse<FavoriteRequestParams>
+    >(`/api/query/editSavedQuery/${id}`, {
+      title,
+      maxCount,
+      sortBy,
+      text,
+    });
   },
 };
 
@@ -58,34 +59,36 @@ export const fetchGetFavorites = createAppAsyncThunk(
       const { data } = await favoriteApi.getFavorites();
       return data;
     } catch (err) {
-      return thunkApi.rejectWithValue('Не удалось загрузить список запросов :(');
+      return thunkApi.rejectWithValue(
+        'Не удалось загрузить список запросов :(',
+      );
     }
   },
 );
 
-export const fetchAddFavorite = createAppAsyncThunk<FavoriteResponse, FavoriteRequestParams>(
-  'favorite/fetchAddFavorite',
-  async (body, thunkApi) => {
-    try {
-      const { data } = await favoriteApi.addFavorite(body);
-      return data;
-    } catch (err) {
-      return thunkApi.rejectWithValue('Не удалось добавить запрос :(');
-    }
-  },
-);
+export const fetchAddFavorite = createAppAsyncThunk<
+  FavoriteResponse,
+  FavoriteRequestParams
+>('favorite/fetchAddFavorite', async (body, thunkApi) => {
+  try {
+    const { data } = await favoriteApi.addFavorite(body);
+    return data;
+  } catch (err) {
+    return thunkApi.rejectWithValue('Не удалось добавить запрос :(');
+  }
+});
 
-export const fetchDeleteFavorite = createAppAsyncThunk<FavoriteDeleteResponse, number>(
-  'favorite/fetchDeleteFavorite',
-  async (id, thunkApi) => {
-    try {
-      const { data } = await favoriteApi.deleteFavorite(id);
-      return { data, id };
-    } catch (err) {
-      return thunkApi.rejectWithValue('Не удалось удалить запрос :(');
-    }
-  },
-);
+export const fetchDeleteFavorite = createAppAsyncThunk<
+  FavoriteDeleteResponse,
+  number
+>('favorite/fetchDeleteFavorite', async (id, thunkApi) => {
+  try {
+    const { data } = await favoriteApi.deleteFavorite(id);
+    return { data, id };
+  } catch (err) {
+    return thunkApi.rejectWithValue('Не удалось удалить запрос :(');
+  }
+});
 
 export const fetchUpdateFavorite = createAppAsyncThunk<
   FavoriteUpdateResponse,

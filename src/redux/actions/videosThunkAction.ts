@@ -11,14 +11,14 @@ export const videosApi = {
   },
 };
 
-export const fetchGetVideos = createAsyncThunk<GetVideosResponse, VideoSearchParams>(
-  'videos/fetchGetVideos',
-  async ({ query, sortBy, countResult }, thunkApi) => {
-    try {
-      const { data } = await videosApi.getVideos({ query, sortBy, countResult });
-      return data;
-    } catch (err) {
-      return thunkApi.rejectWithValue('Не удалось загрузить видео :(');
-    }
-  },
-);
+export const fetchGetVideos = createAsyncThunk<
+  GetVideosResponse,
+  VideoSearchParams
+>('videos/fetchGetVideos', async ({ query, sortBy, countResult }, thunkApi) => {
+  try {
+    const { data } = await videosApi.getVideos({ query, sortBy, countResult });
+    return data;
+  } catch (err) {
+    return thunkApi.rejectWithValue('Не удалось загрузить видео :(');
+  }
+});

@@ -1,0 +1,44 @@
+.modal {
+  & h3 {
+    text-align: center;
+    font-weight: 700;
+  }
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    & div {
+      margin: 0px;
+      label {
+        font-size: 13px;
+      }
+    }
+  }
+  &__name-required {
+    &::before {
+      content: '*';
+      color: red;
+      top: 0;
+      left: 0;
+      font-size: px;
+    }
+  }
+  &__slider {
+    width: 100%;
+    &-block {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+  }
+
+  &__buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    button {
+      flex: 1 1 auto;
+      padding: 18px 0px;
+    }
+  }
+}
