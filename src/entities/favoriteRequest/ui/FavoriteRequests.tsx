@@ -38,23 +38,17 @@ export const FavoriteRequests: FC = () => {
       <div className="favorites__container">
         {favorites.length === 0 && isLoading === false && (
           <>
-            <h2 style={{ textAlign: 'center', fontSize: 20, fontWeight: 600 }}>
-              Добавьте свой первый запрос
-            </h2>
+            <h2>Добавьте свой первый запрос</h2>
           </>
         )}
         {isLoading ? (
-          <h1 style={{ textAlign: 'center' }}>
-            Сохраненные запросы загружаются...
-          </h1>
+          <h1>Сохраненные запросы загружаются...</h1>
         ) : (
           favorites.map((item) => (
-            <div
-              className="favorites__item"
-              key={item?.id}
-              onClick={() => handleClickItem(item?.query)}
-            >
-              <li>{item?.query.text}</li>
+            <div className="favorites__item" key={item?.id}>
+              <li onClick={() => handleClickItem(item?.query)}>
+                {item?.query.text}
+              </li>
               <div className="favorites__buttons">
                 <button
                   className="favorites__buttons--change"

@@ -36,9 +36,7 @@ export const LoginForm: FC = () => {
         validateStatus={errors.login ? 'error' : ''}
         help={
           errors.login && (
-            <span
-              style={{ display: 'block', textAlign: 'center', color: 'red' }}
-            >
+            <span className="login__form-error">
               {String(errors.login?.message)}
             </span>
           )
@@ -64,11 +62,7 @@ export const LoginForm: FC = () => {
         validateStatus={errors.password ? 'error' : ''}
         help={
           errors.password && (
-            <span
-              style={{ display: 'block', textAlign: 'center', color: 'red' }}
-            >
-              {errors.password.message}
-            </span>
+            <span className="login__form-error">{errors.password.message}</span>
           )
         }
       >

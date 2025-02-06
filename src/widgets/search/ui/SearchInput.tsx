@@ -8,13 +8,14 @@ import { FavoriteRequestParams } from '../../../components/type';
 import { fetchGetVideos } from '../../../redux/actions/videosThunkAction';
 import { SearchIsDone } from './SearchIsDone';
 import { useAppSelector, useAppDispatch } from '../../../shared/store';
+import './search.scss';
 
 export type SearchProps = GetProps<typeof Input.Search>;
 export type SearchInputProps = {
   handleSearchSuccess: (state: boolean) => void; // Тип функции пропса
 };
 
-export const SearchMain: FC<SearchInputProps> = ({ handleSearchSuccess }) => {
+export const SearchInput: FC<SearchInputProps> = ({ handleSearchSuccess }) => {
   const { isModalOpen } = useAppSelector((state) => state.modal);
   const favoriteRequest: FavoriteRequestParams | null = JSON.parse(
     localStorage.getItem('favoriteRequest') || 'null',
@@ -92,22 +93,13 @@ export const SearchMain: FC<SearchInputProps> = ({ handleSearchSuccess }) => {
               videos && (
                 <Tooltip
                   title={() => (
-                    <div style={{ backgroundColor: 'white', color: 'black' }}>
+                    <div className="tooltip">
                       <p>Поиск сохранён в разделе «Избранное» </p>
-                      <NavLink
-                        to="/favoritePage"
-                        style={{
-                          color: '#1677ff',
-                          textDecoration: 'underline',
-                        }}
-                      >
-                        Перейти в избранное
-                      </NavLink>
+                      <NavLink to="/favoritePage">Перейти в избранное</NavLink>
                     </div>
                   )}
                   color="white"
                   placement="bottom"
-                  style={{ color: 'red', backgroundColor: 'black' }}
                   open={
                     iconHeart === 'fa-solid fa-heart' && checkFunc
                       ? undefined
@@ -123,8 +115,9 @@ export const SearchMain: FC<SearchInputProps> = ({ handleSearchSuccess }) => {
                 </Tooltip>
               )
             }
-            className="main__search-input"
-            style={{ width: videos ? '100%' : '650px' }}
+            className={
+              videos ? ' search-input search-input_full' : 'search-input'
+            }
             onSearch={onSearch}
             onChange={handleOnChange}
           />

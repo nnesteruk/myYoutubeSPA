@@ -4,6 +4,9 @@
   h1 {
     font-size: 18px;
   }
+  &__input {
+    width: 80%;
+  }
   &__block {
     display: flex;
     gap: 5px;

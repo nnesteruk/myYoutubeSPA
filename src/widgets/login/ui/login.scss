@@ -32,6 +32,11 @@ $color: #1677ff;
 
   &__form {
     width: 70%;
+    &-error {
+      display: 'block';
+      text-align: 'center';
+      color: 'red';
+    }
   }
   &__input {
     font-size: 16px;

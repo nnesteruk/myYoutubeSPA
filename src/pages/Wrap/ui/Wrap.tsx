@@ -68,7 +68,6 @@ export const Wrap: React.FC = () => {
             mode="horizontal"
             defaultSelectedKeys={['1']}
             items={items}
-            style={{ flex: 1, minWidth: 0 }}
             onClick={clickMenuItem}
           />
         </div>

@@ -38,7 +38,7 @@ export const ApiModal: FC<ApiModalProperty> = ({ open, setOpen }) => {
       <h1>Добавьте google token!</h1>
       <div className="api-modal__block">
         <label>Google token</label>
-        <Space.Compact size="middle" style={{ width: '80%' }}>
+        <Space.Compact size="middle" className="api-modal__input">
           <Input
             onChange={(e) => setApikey(e.target.value)}
             onKeyDown={(e) => (e.key === 'Enter' ? addToken() : undefined)}
