@@ -2,13 +2,13 @@ import { GetProps, Input, Tooltip } from 'antd';
 import Search from 'antd/es/input/Search';
 import { FC, SetStateAction, useEffect, useRef, useState } from 'react';
 import { FavoriteModal } from 'widgets/favorite_modal/ui/FavoriteModal';
-import { openModal } from '../../../redux/slices/modalSlice';
+import { openModal } from 'shared/model/modalSlice';
 import { NavLink } from 'react-router';
-import { FavoriteRequestParams } from '../../../components/type';
-import { fetchGetVideos } from '../../../redux/actions/videosThunkAction';
+import { FavoriteRequestParams } from 'components/type';
+import { fetchGetVideos } from 'entities/videos/api/videosAction';
 import { SearchIsDone } from './SearchIsDone';
-import { useAppSelector, useAppDispatch } from '../../../shared/store';
 import './search.scss';
+import { useAppDispatch, useAppSelector } from 'shared/config';
 
 export type SearchProps = GetProps<typeof Input.Search>;
 export type SearchInputProps = {

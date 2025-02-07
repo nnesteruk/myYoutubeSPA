@@ -5,8 +5,8 @@ import axios from 'axios';
 import { NavLink, useNavigate } from 'react-router';
 import { FC } from 'react';
 import { LoginValues } from '../../../components/type';
-import { apiUrl } from '../../../redux/actions/favoriteThunkActions';
 import './login.scss';
+import { apiUrl } from 'shared/config';
 export const LoginForm: FC = () => {
   const {
     handleSubmit,

@@ -1,21 +1,15 @@
-import axios, { AxiosResponse } from 'axios';
+import { AxiosResponse } from 'axios';
 import {
   FavoriteDeleteResponse,
   FavoriteProperty,
   FavoriteRequestParams,
   FavoriteResponse,
   FavoriteUpdateResponse,
-} from '../../components/type';
-import { createAppAsyncThunk } from '../../shared/store';
+} from 'components/type';
+import { createAppAsyncThunk } from 'shared/config/';
+import { instance } from 'shared/api';
 
-export const apiUrl = import.meta.env.VITE_API_URL; //папка
-
-export const instance = axios.create({
-  baseURL: `${apiUrl}`,
-  headers: {
-    Authorization: `Bearer ${localStorage.getItem('token')}`,
-  },
-}); //папка
+//папка
 
 export const favoriteApi = {
   getFavorites() {

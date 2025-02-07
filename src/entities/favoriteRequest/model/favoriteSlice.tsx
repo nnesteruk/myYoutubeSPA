@@ -4,8 +4,8 @@ import {
   fetchDeleteFavorite,
   fetchGetFavorites,
   fetchUpdateFavorite,
-} from '../actions/favoriteThunkActions';
-import { FavoriteSliceInitialState } from '../../components/type';
+} from '../api';
+import { FavoriteSliceInitialState } from 'components/type';
 
 const initialState: FavoriteSliceInitialState = {
   favorites: [],
@@ -37,16 +37,20 @@ const favoriteSlice = createSlice({
       })
       .addCase(fetchDeleteFavorite.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.favorites = state.favorites.filter((item) => item?.id !== action.payload?.id);
+        state.favorites = state.favorites.filter(
+          (item) => item?.id !== action.payload?.id,
+        );
         state.error = '';
       })
       .addCase(fetchUpdateFavorite.fulfilled, (state, action) => {
         state.isLoading = false;
         state.favorites = state.favorites.map((item) =>
-          item.id === action.payload.id ? { ...item, query: action.payload.data } : item,
+          item.id === action.payload.id
+            ? { ...item, query: action.payload.data }
+            : item,
         );
         state.error = '';
       });
   },
 });
-export default favoriteSlice.reducer; // без default
+export const { reducer } = favoriteSlice; // без default

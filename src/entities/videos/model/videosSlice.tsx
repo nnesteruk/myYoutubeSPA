@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchGetVideos } from '../actions/videosThunkAction';
-import { VideosSliceInitialState } from '../../components/type';
+import { fetchGetVideos } from '../api';
+import { VideosSliceInitialState } from 'components/type';
 
 const initialState: VideosSliceInitialState = {
   videos: null,
@@ -31,4 +31,4 @@ const videosSlice = createSlice({
       });
   },
 });
-export default videosSlice.reducer;
+export const { reducer } = videosSlice;

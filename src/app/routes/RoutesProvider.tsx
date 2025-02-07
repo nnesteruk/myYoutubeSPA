@@ -6,7 +6,7 @@ import { SearchPage } from 'pages/searchPage';
 import { FavoritePage } from 'pages/favoritePage';
 import { BASE_NAME } from 'shared/routes/routePaths';
 
-export const AppRouter = () => {
+export const RoutesProvider = () => {
   const PrivateRoute = () => {
     const isAuth = localStorage.getItem('token');
     return isAuth ? <Outlet /> : <Navigate to="/" replace />;

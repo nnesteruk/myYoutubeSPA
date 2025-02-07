@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { instance } from './favoriteThunkActions';
-import { GetVideosResponse, VideoSearchParams } from '../../components/type';
+import { GetVideosResponse, VideoSearchParams } from 'components/type';
 import { AxiosResponse } from 'axios';
+import { instance } from 'shared/api';
 
 export const videosApi = {
   getVideos({ query = '', sortBy = 'relevance', countResult = 12 }) {

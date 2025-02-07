@@ -1,14 +1,14 @@
 import { useNavigate } from 'react-router';
 import { FavoriteModal } from 'widgets/favorite_modal/ui/FavoriteModal';
-import { openModal } from 'redux/slices/modalSlice';
+import { openModal } from 'shared/model/modalSlice';
 import { FavoriteProperty, FavoriteRequestParams } from 'components/type';
 import { FC, useEffect } from 'react';
 import {
   fetchDeleteFavorite,
   fetchGetFavorites,
-} from 'redux/actions/favoriteThunkActions';
-import { useAppDispatch, useAppSelector } from 'shared/store';
+} from 'entities/favoriteRequest/api/favoriteActions';
 import './favoriteRequests.scss';
+import { useAppDispatch, useAppSelector } from 'shared/config';
 
 export const FavoriteRequests: FC = () => {
   const navigate = useNavigate();

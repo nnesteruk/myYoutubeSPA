@@ -1,5 +1,5 @@
 import React from 'react';
-import { Layout, Menu, theme } from 'antd';
+import { Layout, Menu } from 'antd';
 import { Outlet, useNavigate } from 'react-router';
 import './wrap.scss';
 
@@ -18,9 +18,9 @@ const items = ['Поиск', 'Избранное', 'Выйти'].map((name, inde
 export const Wrap: React.FC = () => {
   const navigate = useNavigate();
 
-  const {
-    token: { borderRadiusLG },
-  } = theme.useToken();
+  // const {
+  //   token: { borderRadiusLG },
+  // } = theme.useToken();
 
   const clickYoutube = () => {
     navigate('/searchPage');

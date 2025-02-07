@@ -3,8 +3,8 @@ import axios from 'axios';
 import { FC } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { NavLink, useNavigate } from 'react-router';
-import { apiUrl } from '../../../redux/actions/favoriteThunkActions';
 import './registration.scss';
+import { apiUrl } from 'shared/config';
 
 type FormValues = {
   password: string;

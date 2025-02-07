@@ -1,8 +1,8 @@
 import { Button } from 'antd';
-import { closeModal } from 'redux/slices/modalSlice';
+import { closeModal } from 'shared/model/modalSlice';
 import { FC } from 'react';
-import { useAppDispatch } from 'shared/store';
 import { FavoriteProperty } from 'components/type';
+import { useAppDispatch } from 'shared/config';
 
 export const ModalButtons: FC = () => {
   const changeFav: FavoriteProperty | null = JSON.parse(

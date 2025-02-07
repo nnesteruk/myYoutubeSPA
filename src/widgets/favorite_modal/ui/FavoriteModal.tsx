@@ -1,6 +1,6 @@
 import { Form, InputNumber, Modal, Select, Slider, Input } from 'antd';
 import { FC, useEffect, useState } from 'react';
-import { closeModal } from 'redux/slices/modalSlice';
+import { closeModal } from 'shared/model/modalSlice';
 import { ModalButtons } from './ModalButtons';
 import {
   FavoriteModalProps,
@@ -10,9 +10,9 @@ import {
 import {
   fetchAddFavorite,
   fetchUpdateFavorite,
-} from 'redux/actions/favoriteThunkActions';
-import { useAppDispatch } from 'shared/store';
+} from 'entities/favoriteRequest/api/favoriteActions';
 import './favoriteModal.scss';
+import { useAppDispatch } from 'shared/config';
 
 export const FavoriteModal: FC<FavoriteModalProps> = ({
   open,

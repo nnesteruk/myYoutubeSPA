@@ -1,9 +1,9 @@
 import { Button, Input, Modal, Space } from 'antd';
-import { apiUrl } from 'redux/actions/favoriteThunkActions';
 import axios from 'axios';
 import { FC, useState } from 'react';
 import { ApiModalProperty } from 'components/type';
 import './apiModal.scss';
+import { apiUrl } from 'shared/config';
 
 export const ApiModal: FC<ApiModalProperty> = ({ open, setOpen }) => {
   const [apiKey, setApikey] = useState('');
