@@ -1,14 +1,13 @@
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Form, Input } from 'antd';
 import { useForm, Controller } from 'react-hook-form';
-import axios from 'axios';
 import { NavLink, useNavigate } from 'react-router';
 import { FC } from 'react';
 import { LoginValues } from 'shared/types';
 import './login.scss';
-import { apiUrl } from 'shared/config';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { loginSchema } from '../model';
+import { instance } from 'shared/api';
 export const LoginForm: FC = () => {
   const {
     handleSubmit,
@@ -18,7 +17,7 @@ export const LoginForm: FC = () => {
   const navigate = useNavigate();
   const onFinish = async (values: LoginValues) => {
     try {
-      const response = await axios.post(`${apiUrl}/api/login/`, values);
+      const response = await instance.post(`/api/login/`, values);
       localStorage.setItem('token', response.data?.accessToken);
       navigate('/searchPage');
     } catch (err: any) {

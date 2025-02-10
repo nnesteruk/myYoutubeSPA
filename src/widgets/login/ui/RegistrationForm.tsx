@@ -1,12 +1,11 @@
 import { Button, Form, Input, Tooltip } from 'antd';
-import axios from 'axios';
 import { FC } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { NavLink, useNavigate } from 'react-router';
 import './registration.scss';
-import { apiUrl } from 'shared/config';
 import { FormValues, registrationSchema } from '../model';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { instance } from '../api';
 
 const formItemLayout = {
   labelCol: { span: 10 }, // Ширина области метки (label)
@@ -23,7 +22,7 @@ export const RegistrationForm: FC = () => {
 
   const onSubmit = async (value: FormValues) => {
     try {
-      await axios.post(`${apiUrl}/api/register/`, value);
+      await instance.post('/api/register/', value);
       alert('Регистрация прошла успешно');
       navigate('/');
     } catch (err: any) {
