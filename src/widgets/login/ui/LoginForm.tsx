@@ -7,12 +7,14 @@ import { FC } from 'react';
 import { LoginValues } from '../../../components/type';
 import './login.scss';
 import { apiUrl } from 'shared/config';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { loginSchema } from '../model';
 export const LoginForm: FC = () => {
   const {
     handleSubmit,
     control,
     formState: { errors },
-  } = useForm<LoginValues>();
+  } = useForm<LoginValues>({ resolver: yupResolver(loginSchema) });
   const navigate = useNavigate();
   const onFinish = async (values: LoginValues) => {
     try {
@@ -32,68 +34,52 @@ export const LoginForm: FC = () => {
       initialValues={{ remember: true }}
       onFinish={handleSubmit(onFinish)}
     >
-      <Form.Item
-        validateStatus={errors.login ? 'error' : ''}
-        help={
-          errors.login && (
-            <span className="login__form-error">
-              {String(errors.login?.message)}
-            </span>
-          )
-        }
-      >
+      <div>
         <Controller
           name="login"
           control={control}
-          rules={{
-            required: { value: true, message: 'Введите имя пользователя' },
-          }}
           render={({ field }) => (
             <Input
               {...field}
-              className="login__input"
+              className={
+                errors.login?.message
+                  ? 'login__input login__input_error'
+                  : 'login__input'
+              }
               prefix={<UserOutlined />}
               placeholder="Логин"
             />
           )}
         />
-      </Form.Item>
-      <Form.Item
-        validateStatus={errors.password ? 'error' : ''}
-        help={
-          errors.password && (
-            <span className="login__form-error">{errors.password.message}</span>
-          )
-        }
-      >
+        <p className="login__errors">{errors.login?.message}</p>
+      </div>
+      <div>
         <Controller
           name="password"
           control={control}
-          rules={{
-            required: { value: true, message: 'Введите пароль' },
-            pattern: {
-              value: /^(?=.*[A-Z]).{8,}$/,
-              message: 'Некорректный пароль',
-            },
-          }}
           render={({ field }) => (
             <Input.Password
-              className="login__input"
+              className={
+                errors.password?.message
+                  ? 'login__input login__input_error'
+                  : 'login__input'
+              }
               {...field}
               prefix={<LockOutlined />}
               placeholder="Пароль"
             />
           )}
         />
-      </Form.Item>
-      <Form.Item className="login__buttons">
+        <p className="login__errors"> {errors.password?.message}</p>
+      </div>
+      <div className="login__buttons">
         <Button className="login__button" type="primary" htmlType="submit">
           Войти
         </Button>
         <NavLink to="/registration" className="login__link">
           Зарегистрироваться
         </NavLink>
-      </Form.Item>
+      </div>
     </Form>
   );
 };

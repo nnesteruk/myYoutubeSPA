@@ -1,32 +1,33 @@
-import { GetProps, Input, Tooltip } from 'antd';
+import { InputRef, Tooltip } from 'antd';
 import Search from 'antd/es/input/Search';
 import { FC, SetStateAction, useEffect, useRef, useState } from 'react';
 import { FavoriteModal } from 'widgets/favorite_modal/ui/FavoriteModal';
 import { openModal } from 'shared/model/modalSlice';
 import { NavLink } from 'react-router';
-import { FavoriteRequestParams } from 'components/type';
 import { fetchGetVideos } from 'entities/videos/api/videosAction';
 import { SearchIsDone } from './SearchIsDone';
 import './search.scss';
 import { useAppDispatch, useAppSelector } from 'shared/config';
-
-export type SearchProps = GetProps<typeof Input.Search>;
-export type SearchInputProps = {
-  handleSearchSuccess: (state: boolean) => void; // Тип функции пропса
-};
+import {
+  SearchInputProps,
+  SearchProps,
+  useFavoriteRequest,
+  useTooltipVisibale,
+} from '../model';
 
 export const SearchInput: FC<SearchInputProps> = ({ handleSearchSuccess }) => {
   const { isModalOpen } = useAppSelector((state) => state.modal);
-  const favoriteRequest: FavoriteRequestParams | null = JSON.parse(
-    localStorage.getItem('favoriteRequest') || 'null',
-  );
   const dispatch = useAppDispatch();
-  const [searchText, setSearchText] = useState(favoriteRequest?.title ?? '');
-  const [tooltipVisible, setTooltipVisible] = useState(false);
-  const [iconHeart, setIconHeart] = useState('fa-regular fa-heart');
-  const [checkFunc, setCheckFunc] = useState(false);
   const { videos, error, isSuccess } = useAppSelector((state) => state.videos);
-  const searchRef = useRef();
+  const { favoriteRequest, searchText, handleOnChange } = useFavoriteRequest();
+  const {
+    iconHeart,
+    setIconHeart,
+    tooltipVisible,
+    setTooltipVisible,
+    checkFunc,
+  } = useTooltipVisibale(favoriteRequest);
+  const searchRef = useRef<InputRef | null>(null);
 
   const onSearch: SearchProps['onSearch'] = async () => {
     if (searchText) {
@@ -35,47 +36,17 @@ export const SearchInput: FC<SearchInputProps> = ({ handleSearchSuccess }) => {
       setIconHeart('fa-regular fa-heart');
     } else {
       alert('Введите запрос в поле ввода');
-      console.log(searchRef.current);
-      // searchRef.current.focus();
+      searchRef.current?.focus();
     }
   };
 
   const clickHeart = (): void => {
     dispatch(openModal());
   };
-  const handleOnChange = (e: {
-    target: { value: SetStateAction<string> };
-  }): void => {
-    setSearchText(e.target.value);
-  };
-
-  useEffect(() => {
-    if (tooltipVisible || favoriteRequest) {
-      setIconHeart('fa-solid fa-heart'); // Меняем иконку на "заполненное сердце"
-      // Убираем тултип через 2 секунды
-      setTimeout(() => {
-        setTooltipVisible(false); // Прячем тултип
-        setCheckFunc(true);
-      }, 2000);
-    }
-  }, [tooltipVisible]);
 
   useEffect(() => {
     isSuccess && handleSearchSuccess(isSuccess);
   }, [isSuccess, handleSearchSuccess]);
-
-  useEffect(() => {
-    if (searchText) {
-      dispatch(
-        fetchGetVideos({
-          query: searchText,
-          countResult: favoriteRequest?.maxCount,
-          sortBy: favoriteRequest?.sortBy,
-        }),
-      );
-    }
-    localStorage.removeItem('favoriteRequest');
-  }, []); // для сохраненного запроса
 
   return (
     <>
@@ -88,7 +59,7 @@ export const SearchInput: FC<SearchInputProps> = ({ handleSearchSuccess }) => {
             enterButton="Найти"
             size="large"
             defaultValue={searchText}
-            // ref={searchRef}
+            ref={searchRef}
             suffix={
               videos && (
                 <Tooltip

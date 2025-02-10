@@ -1,20 +1,9 @@
-import { FC, useState } from 'react';
-import { VideoYoutubeProperty } from '../../../components/type';
+import { FC } from 'react';
 import { VideosSection } from 'entities/videos/ui/VideosSection';
-
-type SearchIsDoneProps = {
-  searchText: string;
-  videos: VideoYoutubeProperty | null;
-};
+import { SearchIsDoneProps, useViewList } from '../model';
 
 export const SearchIsDone: FC<SearchIsDoneProps> = ({ searchText, videos }) => {
-  const [filterChoice, setFilterChoice] = useState('videos__list-content');
-  const onClickList = (): void => {
-    setFilterChoice(() => 'videos__list-content');
-  };
-  const onClickGrid = (): void => {
-    setFilterChoice(() => 'videos__block-content');
-  };
+  const { filterChoice, onClickGrid, onClickList } = useViewList();
   return (
     <>
       <div className="search__second-line">

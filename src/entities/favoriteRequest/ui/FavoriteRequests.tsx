@@ -16,17 +16,18 @@ export const FavoriteRequests: FC = () => {
   const { favorites, isLoading } = useAppSelector((state) => state.favorite);
   const { isModalOpen } = useAppSelector((state) => state.modal);
   const handleClickItem = ({
-    title,
+    text,
     maxCount,
     sortBy,
   }: FavoriteRequestParams) => {
     localStorage.setItem(
       'favoriteRequest',
-      JSON.stringify({ title, sortBy, maxCount }),
+      JSON.stringify({ text, sortBy, maxCount }),
     );
     navigate('/searchPage');
   };
   const handleChangeClick = (item: FavoriteProperty): void => {
+    console.log(item);
     localStorage.setItem('changeFavorite', JSON.stringify(item));
     dispatch(openModal());
   };
@@ -47,7 +48,7 @@ export const FavoriteRequests: FC = () => {
           favorites.map((item) => (
             <div className="favorites__item" key={item?.id}>
               <li onClick={() => handleClickItem(item?.query)}>
-                {item?.query.text}
+                {item?.query.title}
               </li>
               <div className="favorites__buttons">
                 <button

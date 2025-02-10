@@ -1,10 +1,12 @@
-import { Button, Form, Input } from 'antd';
+import { Button, Form, Input, Tooltip } from 'antd';
 import axios from 'axios';
 import { FC } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { NavLink, useNavigate } from 'react-router';
 import './registration.scss';
 import { apiUrl } from 'shared/config';
+import { registrationSchema } from '../model';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 type FormValues = {
   password: string;
@@ -23,7 +25,7 @@ export const RegistrationForm: FC = () => {
     handleSubmit,
     control,
     formState: { errors },
-  } = useForm<FormValues>();
+  } = useForm<FormValues>({ resolver: yupResolver(registrationSchema) });
 
   const onSubmit = async (value: FormValues) => {
     try {
@@ -41,69 +43,69 @@ export const RegistrationForm: FC = () => {
       className="form"
       onFinish={handleSubmit(onSubmit)}
     >
-      <Form.Item
-        label="Имя пользователя:"
-        className="form__input"
-        validateStatus={errors.login ? 'error' : ''}
-        help={errors.login?.message}
-      >
+      <div>
+        <label>Login:</label>
         <Controller
           name="login"
           control={control}
-          rules={{
-            required: { value: true, message: 'Введите имя пользователя' },
-          }}
           render={({ field }) => (
             <Input
-              className="form__input-inner"
               {...field}
+              className={
+                errors.login?.message
+                  ? 'form__input form__input_error'
+                  : 'form__input'
+              }
               placeholder="nikiN"
             />
           )}
         />
-      </Form.Item>
-      <Form.Item
-        label="Email:"
-        className="form__input"
-        validateStatus={errors.email ? 'error' : ''}
-        help={errors.email?.message}
-      >
+        <p className="form__errors"> {errors.login?.message}</p>
+      </div>
+      <div>
+        <label>Email:</label>
         <Controller
           name="email"
           control={control}
-          rules={{
-            required: { value: true, message: 'Введите email' },
-            pattern: {
-              value: /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/,
-              message: 'Введите корректный email',
-            },
-          }}
           render={({ field }) => (
-            <Input {...field} placeholder="nikita@yandex.ru" />
+            <Input
+              {...field}
+              className={
+                errors.email?.message
+                  ? 'form__input form__input_error'
+                  : 'form__input'
+              }
+              placeholder="nikita@yandex.ru"
+            />
           )}
         />
-      </Form.Item>
-      <Form.Item
-        label="Пароль"
-        className="form__input"
-        tooltip="Минимум 8 символов и 1 заглавную букву,1 прописную, 1 символ, 1 цифру"
-        help={errors.password?.message}
-        validateStatus={errors.password ? 'error' : ''}
-      >
+        <p className="form__errors"> {errors.email?.message}</p>
+      </div>
+      <div>
+        <Tooltip
+          title="Минимум 8 символов и 1 заглавную букву,1 прописную, 1 символ, 1 цифру"
+          placement="right"
+        >
+          <label className="form__password-label">Password:</label>
+        </Tooltip>
         <Controller
           name="password"
           control={control}
-          rules={{
-            required: { value: true, message: 'Введите пароль' },
-            pattern: {
-              value: /^(?=.*[A-Z]).{8,}$/,
-              message: 'Пароль не соответствует подсказке',
-            },
-          }}
-          render={({ field }) => <Input {...field} placeholder="Q123445566" />}
+          render={({ field }) => (
+            <Input
+              {...field}
+              className={
+                errors.password?.message
+                  ? 'form__input form__input_error'
+                  : 'form__input'
+              }
+              placeholder="Q123445566"
+            />
+          )}
         />
-      </Form.Item>
-      <Form.Item className="form__buttons">
+        <p className="form__errors"> {errors.password?.message}</p>
+      </div>
+      <div className="form__buttons">
         <Button type="primary" htmlType="submit">
           Зарегистрироваться
         </Button>
@@ -113,7 +115,7 @@ export const RegistrationForm: FC = () => {
             Войти
           </NavLink>
         </div>
-      </Form.Item>
+      </div>
     </Form>
   );
 };

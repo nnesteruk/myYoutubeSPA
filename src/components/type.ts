@@ -3,12 +3,6 @@ export type LoginValues = {
   password: string;
 };
 
-export type ValueOnFinish = {
-  name: string;
-  searchText: string;
-  sort: string;
-};
-
 export type QueryBase = {
   title: string;
   text?: string;
@@ -16,6 +10,7 @@ export type QueryBase = {
   sortBy?: string;
   id?: number;
 };
+export type ValueOnFinish = Pick<QueryBase, 'title' | 'text' | 'sortBy'>;
 
 export type FavoriteModalProps = {
   open: boolean;

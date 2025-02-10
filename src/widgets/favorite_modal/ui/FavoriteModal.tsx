@@ -36,20 +36,21 @@ export const FavoriteModal: FC<FavoriteModalProps> = ({
     if (changeFav?.id) {
       dispatch(
         fetchUpdateFavorite({
-          text: value.name,
-          title: value.searchText,
-          sortBy: value.sort,
+          text: value.text,
+          title: value.title,
+          sortBy: value.sortBy,
           maxCount: inputValue,
           id: changeFav?.id,
         }),
       );
       dispatch(closeModal());
     } else {
+      console.log(value);
       dispatch(
         fetchAddFavorite({
-          text: value.name,
-          title: value.searchText,
-          sortBy: value.sort,
+          text: value.text,
+          title: value.title,
+          sortBy: value.sortBy,
           maxCount: inputValue,
           id: queryId,
         }),
@@ -61,9 +62,9 @@ export const FavoriteModal: FC<FavoriteModalProps> = ({
 
   useEffect(() => {
     if (open) {
-      form.setFieldValue('searchText', text || changeFav?.query.title);
-      form.setFieldValue('name', changeFav?.query.text);
-      form.setFieldValue('sort', changeFav?.query.sortBy);
+      form.setFieldValue('title', changeFav?.query.title);
+      form.setFieldValue('text', text || changeFav?.query.text);
+      form.setFieldValue('sortBy', changeFav?.query.sortBy);
       setInputValue(changeFav?.query.maxCount || 0);
     } else {
       form.resetFields();
@@ -83,7 +84,7 @@ export const FavoriteModal: FC<FavoriteModalProps> = ({
       <Form form={form} onFinish={onFinish} className="modal__form">
         <div>
           <label>Запрос</label>
-          <Form.Item name="searchText" initialValue={text}>
+          <Form.Item name="text" initialValue={text}>
             <Input
               placeholder="поиск"
               disabled={changeFav?.id ? false : true}
@@ -93,7 +94,7 @@ export const FavoriteModal: FC<FavoriteModalProps> = ({
         <div>
           <label className="modal__name-required">Название</label>
           <Form.Item
-            name="name"
+            name="title"
             rules={[
               { required: true, message: 'Пожалуйста, введите название' },
             ]}
@@ -103,7 +104,7 @@ export const FavoriteModal: FC<FavoriteModalProps> = ({
         </div>
         <div>
           <label>Сортировать по</label>
-          <Form.Item name="sort">
+          <Form.Item name="sortBy">
             <Select
               options={[
                 { value: 'date', label: 'дате' },
