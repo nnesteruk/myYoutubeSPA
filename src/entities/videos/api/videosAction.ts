@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { GetVideosResponse, VideoSearchParams } from 'components/type';
+import { GetVideosResponse, VideoSearchParams } from 'shared/types';
 import { AxiosResponse } from 'axios';
 import { instance } from 'shared/api';
 

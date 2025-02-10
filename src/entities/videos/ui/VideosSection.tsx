@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { VideosSectionProps } from '../../../components/type';
+import { VideosSectionProps } from 'shared/types';
 import './videosSection.scss';
 
 export const VideosSection: FC<VideosSectionProps> = ({ video, choice }) => {

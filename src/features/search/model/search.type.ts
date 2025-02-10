@@ -1,5 +1,5 @@
 import { GetProps, Input } from 'antd';
-import { VideoYoutubeProperty } from 'components/type';
+import { VideoYoutubeProperty } from 'shared/types';
 
 export type SearchIsDoneProps = {
   searchText: string;

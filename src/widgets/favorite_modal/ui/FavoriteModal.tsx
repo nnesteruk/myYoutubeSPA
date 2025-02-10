@@ -6,7 +6,7 @@ import {
   FavoriteModalProps,
   FavoriteProperty,
   ValueOnFinish,
-} from 'components/type';
+} from 'shared/types';
 import {
   fetchAddFavorite,
   fetchUpdateFavorite,

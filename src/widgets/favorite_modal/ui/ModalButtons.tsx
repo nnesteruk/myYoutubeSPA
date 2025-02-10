@@ -1,7 +1,7 @@
 import { Button } from 'antd';
 import { closeModal } from 'shared/model/modalSlice';
 import { FC } from 'react';
-import { FavoriteProperty } from 'components/type';
+import { FavoriteProperty } from 'shared/types';
 import { useAppDispatch } from 'shared/config';
 
 export const ModalButtons: FC = () => {

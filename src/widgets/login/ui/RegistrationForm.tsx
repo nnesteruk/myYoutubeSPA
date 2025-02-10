@@ -5,14 +5,8 @@ import { Controller, useForm } from 'react-hook-form';
 import { NavLink, useNavigate } from 'react-router';
 import './registration.scss';
 import { apiUrl } from 'shared/config';
-import { registrationSchema } from '../model';
+import { FormValues, registrationSchema } from '../model';
 import { yupResolver } from '@hookform/resolvers/yup';
-
-type FormValues = {
-  password: string;
-  email: string;
-  login: string;
-};
 
 const formItemLayout = {
   labelCol: { span: 10 }, // Ширина области метки (label)

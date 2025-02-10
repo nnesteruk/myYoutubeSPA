@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router';
 import { FavoriteModal } from 'widgets/favorite_modal/ui/FavoriteModal';
 import { openModal } from 'shared/model/modalSlice';
-import { FavoriteProperty, FavoriteRequestParams } from 'components/type';
+import { FavoriteProperty, FavoriteRequestParams } from 'shared/types';
 import { FC, useEffect } from 'react';
 import {
   fetchDeleteFavorite,

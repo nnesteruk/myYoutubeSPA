@@ -4,7 +4,7 @@ import { useForm, Controller } from 'react-hook-form';
 import axios from 'axios';
 import { NavLink, useNavigate } from 'react-router';
 import { FC } from 'react';
-import { LoginValues } from '../../../components/type';
+import { LoginValues } from 'shared/types';
 import './login.scss';
 import { apiUrl } from 'shared/config';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -83,5 +83,3 @@ export const LoginForm: FC = () => {
     </Form>
   );
 };
-
-export default LoginForm;

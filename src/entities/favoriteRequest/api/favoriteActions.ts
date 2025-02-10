@@ -5,7 +5,7 @@ import {
   FavoriteRequestParams,
   FavoriteResponse,
   FavoriteUpdateResponse,
-} from 'components/type';
+} from 'shared/types';
 import { createAppAsyncThunk } from 'shared/config/';
 import { instance } from 'shared/api';
 

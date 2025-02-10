@@ -1,7 +1,7 @@
 import { Button, Input, Modal, Space } from 'antd';
 import axios from 'axios';
 import { FC, useState } from 'react';
-import { ApiModalProperty } from 'components/type';
+import { ApiModalProperty } from 'shared/types';
 import './apiModal.scss';
 import { apiUrl } from 'shared/config';
 

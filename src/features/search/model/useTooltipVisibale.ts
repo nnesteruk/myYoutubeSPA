@@ -1,4 +1,4 @@
-import { FavoriteRequestParams } from 'components/type';
+import { FavoriteRequestParams } from 'shared/types';
 import { useEffect, useState } from 'react';
 
 export const useTooltipVisibale = (

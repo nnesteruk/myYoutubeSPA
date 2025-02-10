@@ -1,7 +1,8 @@
-import React from 'react';
+import { FC } from 'react';
 import { Layout, Menu } from 'antd';
 import { Outlet, useNavigate } from 'react-router';
 import './wrap.scss';
+import { MenuItem } from '../model';
 
 const { Header, Content, Footer } = Layout;
 
@@ -10,12 +11,7 @@ const items = ['Поиск', 'Избранное', 'Выйти'].map((name, inde
   label: name,
 }));
 
-// type MenuItem = {
-//   key: string;
-//   keyPath: string[];
-//   domEvent: unknown; //! проверить тип
-// };
-export const Wrap: React.FC = () => {
+export const Wrap: FC = () => {
   const navigate = useNavigate();
 
   // const {
@@ -27,8 +23,8 @@ export const Wrap: React.FC = () => {
     window.location.reload();
   };
 
-  const clickMenuItem = (item: unknown) => {
-    console.log(item);
+  const clickMenuItem = (item: MenuItem) => {
+    console.log(typeof item?.domEvent);
     switch (item.key) {
       case '1':
         navigate('/searchPage');

@@ -1,6 +1,6 @@
 import { InputRef, Tooltip } from 'antd';
 import Search from 'antd/es/input/Search';
-import { FC, SetStateAction, useEffect, useRef, useState } from 'react';
+import { FC, useEffect, useRef } from 'react';
 import { FavoriteModal } from 'widgets/favorite_modal/ui/FavoriteModal';
 import { openModal } from 'shared/model/modalSlice';
 import { NavLink } from 'react-router';

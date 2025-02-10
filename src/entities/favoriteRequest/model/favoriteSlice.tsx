@@ -5,7 +5,7 @@ import {
   fetchGetFavorites,
   fetchUpdateFavorite,
 } from '../api';
-import { FavoriteSliceInitialState } from 'components/type';
+import { FavoriteSliceInitialState } from 'shared/types';
 
 const initialState: FavoriteSliceInitialState = {
   favorites: [],

@@ -1,4 +1,4 @@
-import { FavoriteRequestParams } from 'components/type';
+import { FavoriteRequestParams } from 'shared/types';
 import { fetchGetVideos } from 'entities/videos/api';
 import { SetStateAction, useEffect, useState } from 'react';
 import { useAppDispatch } from 'shared/config';
