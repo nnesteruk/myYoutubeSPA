@@ -33,7 +33,6 @@ export const favoriteApi = {
     >(`/api/query/deleteSavedQuery/${id}`);
   },
   updateFavorite({ title, maxCount, sortBy, id, text }: FavoriteRequestParams) {
-    console.log({ title, maxCount, sortBy, id, text });
     return instance.patch<
       FavoriteRequestParams,
       AxiosResponse<FavoriteRequestParams>

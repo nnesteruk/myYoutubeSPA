@@ -45,7 +45,6 @@ export const FavoriteModal: FC<FavoriteModalProps> = ({
       );
       dispatch(closeModal());
     } else {
-      console.log(value);
       dispatch(
         fetchAddFavorite({
           text: value.text,

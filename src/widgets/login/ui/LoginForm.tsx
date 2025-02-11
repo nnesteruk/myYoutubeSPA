@@ -9,6 +9,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { loginSchema } from '../model';
 import { instance } from 'shared/api';
 import { SEARCH_PAGE } from 'shared/routes';
+import { notify } from 'shared/ui';
 export const LoginForm: FC = () => {
   const {
     handleSubmit,
@@ -22,8 +23,7 @@ export const LoginForm: FC = () => {
       localStorage.setItem('token', response.data?.accessToken);
       navigate(SEARCH_PAGE);
     } catch (err: any) {
-      alert(err.response.data.message);
-      console.log(err);
+      notify.error(err.response.data.message);
     }
   };
 

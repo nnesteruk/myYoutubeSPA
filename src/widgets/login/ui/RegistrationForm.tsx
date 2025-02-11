@@ -7,6 +7,7 @@ import { FormValues, registrationSchema } from '../model';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { instance } from '../api';
 import { MAIN } from 'shared/routes';
+import { notify } from 'shared/ui';
 
 const formItemLayout = {
   labelCol: { span: 10 }, // Ширина области метки (label)
@@ -27,8 +28,7 @@ export const RegistrationForm: FC = () => {
       alert('Регистрация прошла успешно');
       navigate(MAIN);
     } catch (err: any) {
-      alert(err.response.data.message);
-      console.log(err);
+      notify.error(err.response.data.message);
     }
   };
   return (

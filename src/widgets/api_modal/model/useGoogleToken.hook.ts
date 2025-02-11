@@ -1,10 +1,11 @@
 import axios from 'axios';
 import { useState } from 'react';
 import { apiKeyRegex, apiUrl } from 'shared/config';
+import { notify } from 'shared/ui';
 
 export const useGoogleToken = (setOpen: (value: boolean) => void) => {
   const [apiKey, setApikey] = useState('');
-  const [buttonLoading, setButtonLoading] = useState(false); //! вынести логику в хуки
+  const [buttonLoading, setButtonLoading] = useState(false);
 
   const addToken = async () => {
     try {
@@ -25,8 +26,8 @@ export const useGoogleToken = (setOpen: (value: boolean) => void) => {
       } else {
         alert('Некорректный google token');
       }
-    } catch (err) {
-      console.log(err);
+    } catch (err: any) {
+      notify.error(err.message);
     }
   };
   return { buttonLoading, setApikey, addToken };
