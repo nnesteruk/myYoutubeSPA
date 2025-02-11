@@ -1,2 +1,2 @@
 export { useAppDispatch, useAppSelector, createAppAsyncThunk } from './redux';
-export { apiUrl } from './consts';
+export { apiUrl, apiKeyRegex } from './consts';

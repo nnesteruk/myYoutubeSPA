@@ -20,13 +20,6 @@
     li span:hover {
       color: #1677ff;
     }
-    // &::before {
-    //   font-family: 'FontAwesome';
-    //   font-size: 55px;
-    //   content: '\f167'; /* Unicode для иконки YouTube */
-    //   color: #ff0000; /* Цвет YouTube */
-    //   margin: 0px 10px; /* Отступ, если нужен текст рядом */
-    // }
   }
   &__icon {
     color: red;
@@ -42,7 +35,6 @@
     }
   }
   &__content {
-    // padding: 24px;
     height: '100%';
   }
   &__footer {

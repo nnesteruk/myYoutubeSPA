@@ -1,1 +1,7 @@
-export { REGISTRATION, FAVORITE_PAGE, SEARCH_PAGE } from './routePaths';
+export {
+  MAIN,
+  REGISTRATION,
+  SEARCH_PAGE,
+  FAVORITE_PAGE,
+  BASE_NAME,
+} from './routePaths';

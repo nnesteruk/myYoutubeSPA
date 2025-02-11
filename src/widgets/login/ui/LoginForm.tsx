@@ -8,6 +8,7 @@ import './login.scss';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { loginSchema } from '../model';
 import { instance } from 'shared/api';
+import { SEARCH_PAGE } from 'shared/routes';
 export const LoginForm: FC = () => {
   const {
     handleSubmit,
@@ -19,7 +20,7 @@ export const LoginForm: FC = () => {
     try {
       const response = await instance.post(`/api/login/`, values);
       localStorage.setItem('token', response.data?.accessToken);
-      navigate('/searchPage');
+      navigate(SEARCH_PAGE);
     } catch (err: any) {
       alert(err.response.data.message);
       console.log(err);

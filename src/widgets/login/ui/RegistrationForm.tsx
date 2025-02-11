@@ -6,6 +6,7 @@ import './registration.scss';
 import { FormValues, registrationSchema } from '../model';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { instance } from '../api';
+import { MAIN } from 'shared/routes';
 
 const formItemLayout = {
   labelCol: { span: 10 }, // Ширина области метки (label)
@@ -24,7 +25,7 @@ export const RegistrationForm: FC = () => {
     try {
       await instance.post('/api/register/', value);
       alert('Регистрация прошла успешно');
-      navigate('/');
+      navigate(MAIN);
     } catch (err: any) {
       alert(err.response.data.message);
       console.log(err);
@@ -53,7 +54,7 @@ export const RegistrationForm: FC = () => {
             />
           )}
         />
-        <p className="form__errors"> {errors.login?.message}</p>
+        <p className="form__errors"> {errors.login?.message}</p> //!проверка
       </div>
       <div>
         <label>Email:</label>

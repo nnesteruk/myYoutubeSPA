@@ -53,4 +53,5 @@ const favoriteSlice = createSlice({
       });
   },
 });
+// .injectInto(store) //! автоматически добавляет в store
 export const { reducer } = favoriteSlice; // без default

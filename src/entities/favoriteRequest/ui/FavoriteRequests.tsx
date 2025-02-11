@@ -9,6 +9,7 @@ import {
 } from 'entities/favoriteRequest/api/favoriteActions';
 import './favoriteRequests.scss';
 import { useAppDispatch, useAppSelector } from 'shared/config';
+import { SEARCH_PAGE } from 'shared/routes';
 
 export const FavoriteRequests: FC = () => {
   const navigate = useNavigate();
@@ -24,10 +25,9 @@ export const FavoriteRequests: FC = () => {
       'favoriteRequest',
       JSON.stringify({ text, sortBy, maxCount }),
     );
-    navigate('/searchPage');
+    navigate(SEARCH_PAGE);
   };
   const handleChangeClick = (item: FavoriteProperty): void => {
-    console.log(item);
     localStorage.setItem('changeFavorite', JSON.stringify(item));
     dispatch(openModal());
   };

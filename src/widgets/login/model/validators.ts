@@ -1,13 +1,11 @@
-import * as yup from 'yup';
+import { object, string } from 'yup';
 
-export const loginSchema = yup.object().shape({
-  login: yup
-    .string()
+export const loginSchema = object().shape({
+  login: string()
     .trim()
     .required('Обязательное поле')
     .min(3, 'Необходимо минимум 3 символа'),
-  password: yup
-    .string()
+  password: string()
     .trim()
     .required('Обязательное поле')
     .matches(
@@ -16,19 +14,16 @@ export const loginSchema = yup.object().shape({
     ),
 });
 
-export const registrationSchema = yup.object().shape({
-  login: yup
-    .string()
+export const registrationSchema = object().shape({
+  login: string()
     .trim()
     .required('Обязательное поле')
     .min(3, 'Необходимо минимум 3 символа!'),
-  email: yup
-    .string()
+  email: string()
     .trim()
     .required('Обязательное поле')
     .email('Неверный формат email!'),
-  password: yup
-    .string()
+  password: string()
     .trim()
     .required('Обязательное поле')
     .matches(

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { ApiModal } from 'widgets/api_modal/ui/ApiModal';
-import { SearchInput } from 'features/search';
+import { SearchInput } from 'widgets/search';
 import './searchPage.scss';
 
 export const SearchPage: React.FC = () => {

@@ -51,7 +51,7 @@ type Snippet = {
     high?: { url: string };
   };
 };
-type Video = {
+export type Video = {
   id: string;
   snippet: Snippet;
   statistics: {

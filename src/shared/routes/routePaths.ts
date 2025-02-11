@@ -1,4 +1,10 @@
-export const REGISTRATION = '/registration';
-export const SEARCH_PAGE = '/searchPage';
-export const FAVORITE_PAGE = '/favoritePage';
-export const BASE_NAME = '/youtubeSpa/';
+const appRoutes = {
+  MAIN: '/',
+  REGISTRATION: '/registration',
+  SEARCH_PAGE: '/searchPage',
+  FAVORITE_PAGE: '/favoritePage',
+  BASE_NAME: '/youtubeSpa/',
+} as const;
+
+export const { MAIN, REGISTRATION, SEARCH_PAGE, FAVORITE_PAGE, BASE_NAME } =
+  appRoutes;

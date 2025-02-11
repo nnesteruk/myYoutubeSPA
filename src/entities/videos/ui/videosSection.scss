@@ -15,7 +15,6 @@
     flex-direction: column;
     flex: 1 1 20%;
     gap: 5px;
-    // margin-bottom: 10px;
   }
   &__title {
     text-align: justify;
@@ -29,7 +28,6 @@
     border-radius: 20px;
     transition: all 0.5s;
     &:hover {
-      // border: 1px solid #1677ff;
       border-radius: 20px; /* Увеличим радиус */
       padding: 10px 13px;
       background: rgba(0, 0, 0, 0); /* Сделаем фон менее прозрачным */
@@ -59,7 +57,6 @@
     border-radius: 20px;
     transition: all 0.5s;
     &:hover {
-      // border: 1px solid #1677ff;
       border-radius: 20px; /* Увеличим радиус */
       padding: 10px 13px;
       background: rgba(0, 0, 0, 0); /* Сделаем фон менее прозрачным */
