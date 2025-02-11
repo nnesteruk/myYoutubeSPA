@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { fetchGetVideos } from '../api';
 import { VideosSliceInitialState } from 'shared/types';
+import { store } from 'app/store';
 
 const initialState: VideosSliceInitialState = {
   videos: null,
